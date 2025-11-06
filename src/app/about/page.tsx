@@ -20,9 +20,7 @@ export default function AboutPage() {
               <span className="text-[#0b717f]">all about loving Jesus.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl">
-              We're a diverse church learning to follow Jesus in the 21st century. At Church,
-              you'll find surprisingly normal people who are admittedly still in process. Our goal
-              isn't to pretend we're perfect, but to point you to the one who is.
+              We are a church with a place and ministry for every age and every level of maturity. Our primary purpose is to be the body of Christ present in the Simpsonville community, existing to grow in relationship with Christ and God's people.
             </p>
           </div>
         </section>
