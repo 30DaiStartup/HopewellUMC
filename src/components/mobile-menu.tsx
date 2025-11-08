@@ -34,6 +34,7 @@ const secondaryLinks = {
     { label: "Money Resources", href: "#money" },
     { label: "Childcare Center", href: "#childcare" },
     { label: "Facility Rental", href: "#facility" },
+    { label: "Fast", href: "/fast" },
   ],
 };
 
