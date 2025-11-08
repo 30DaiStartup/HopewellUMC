@@ -32,9 +32,7 @@ const secondaryLinks = {
     { label: "Volunteer", href: "#volunteer" },
     { label: "Resource Center", href: "#resources" },
     { label: "Money Resources", href: "#money" },
-    { label: "Brooklake Ethiopia", href: "#ethiopia" },
     { label: "Childcare Center", href: "#childcare" },
-    { label: "Brooklake School", href: "#school" },
     { label: "Facility Rental", href: "#facility" },
   ],
 };
