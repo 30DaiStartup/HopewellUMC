@@ -81,23 +81,35 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  // Subscribe to posts when component mounts
+  // Subscribe to posts when user is authenticated
   useEffect(() => {
+    // Only subscribe if user is authenticated and loading is complete
+    if (!currentUser || loading) {
+      setPosts([]);
+      return;
+    }
+
     const unsubscribe = subscribeToPosts((newPosts) => {
       setPosts(newPosts);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser, loading]);
 
-  // Subscribe to participants when component mounts
+  // Subscribe to participants when user is authenticated
   useEffect(() => {
+    // Only subscribe if user is authenticated and loading is complete
+    if (!currentUser || loading) {
+      setParticipants([]);
+      return;
+    }
+
     const unsubscribe = subscribeToParticipants((newParticipants) => {
       setParticipants(newParticipants);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser, loading]);
 
   // Subscribe to user's fasting sessions when user changes
   useEffect(() => {
