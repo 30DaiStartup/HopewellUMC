@@ -1,21 +1,65 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Play, Square, BookOpen, Smile, Meh, Frown, Sparkles } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Play, Square, BookOpen, Smile, Meh, Frown, Sparkles, TrendingUp, Clock, Award, Calendar, Target, Flame } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
+import { FastingSession } from '@/lib/fasting-types';
 
 export function FastingTracker() {
-  const { currentUser, currentSession, startFasting, endFasting, addJournalEntry, journalEntries } = useFasting();
+  const { currentUser, currentSession, fastingSessions, startFasting, endFasting, addJournalEntry, journalEntries } = useFasting();
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [journalContent, setJournalContent] = useState('');
   const [selectedMood, setSelectedMood] = useState<'joyful' | 'peaceful' | 'struggling' | 'hopeful' | undefined>();
   const [shareToFeed, setShareToFeed] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   const currentDay = getCurrentFastDay();
   const dailyTip = getDailyTip(currentDay);
   const dailyScripture = getDailyScripture(currentDay);
+
+  // Calculate statistics from all sessions
+  const statistics = useMemo(() => {
+    const userSessions = fastingSessions.filter(s => s.userId === currentUser?.id);
+    const completedSessions = userSessions.filter(s => !s.isActive && s.duration > 0);
+
+    const totalTime = completedSessions.reduce((sum, session) => sum + session.duration, 0);
+    const longestSession = completedSessions.reduce((max, session) =>
+      session.duration > max ? session.duration : max, 0
+    );
+    const averageTime = completedSessions.length > 0 ? totalTime / completedSessions.length : 0;
+
+    // Calculate current streak (consecutive days with at least one session)
+    const sortedSessions = [...completedSessions].sort((a, b) =>
+      new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+    );
+
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < sortedSessions.length; i++) {
+      const sessionDate = new Date(sortedSessions[i].startTime);
+      sessionDate.setHours(0, 0, 0, 0);
+      const daysDiff = Math.floor((today.getTime() - sessionDate.getTime()) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff === i) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+
+    return {
+      totalTime,
+      completedCount: completedSessions.length,
+      longestSession,
+      averageTime,
+      streak,
+      completedSessions: sortedSessions,
+    };
+  }, [fastingSessions, currentUser]);
 
   // Calculate elapsed time
   useEffect(() => {
@@ -46,6 +90,16 @@ export function FastingTracker() {
       minutes: minutes.toString().padStart(2, '0'),
       seconds: seconds.toString().padStart(2, '0'),
     };
+  };
+
+  const formatDurationText = (ms: number) => {
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (hours > 0) {
+      return `${hours}h ${minutes}m`;
+    }
+    return `${minutes}m`;
   };
 
   const duration = formatDuration(elapsedTime);
@@ -147,6 +201,213 @@ export function FastingTracker() {
           )}
         </div>
       </div>
+
+      {/* Statistics Dashboard */}
+      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-indigo-600" />
+            Your Progress
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Total Fasting Time */}
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="h-4 w-4 text-blue-600" />
+              <span className="text-xs text-blue-600 font-medium">Total Time</span>
+            </div>
+            <div className="text-2xl font-bold text-blue-900">
+              {formatDurationText(statistics.totalTime)}
+            </div>
+          </div>
+
+          {/* Completed Sessions */}
+          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Target className="h-4 w-4 text-green-600" />
+              <span className="text-xs text-green-600 font-medium">Sessions</span>
+            </div>
+            <div className="text-2xl font-bold text-green-900">
+              {statistics.completedCount}
+            </div>
+          </div>
+
+          {/* Longest Session */}
+          <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Award className="h-4 w-4 text-purple-600" />
+              <span className="text-xs text-purple-600 font-medium">Longest</span>
+            </div>
+            <div className="text-2xl font-bold text-purple-900">
+              {formatDurationText(statistics.longestSession)}
+            </div>
+          </div>
+
+          {/* Current Streak */}
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Flame className="h-4 w-4 text-orange-600" />
+              <span className="text-xs text-orange-600 font-medium">Streak</span>
+            </div>
+            <div className="text-2xl font-bold text-orange-900">
+              {statistics.streak} {statistics.streak === 1 ? 'day' : 'days'}
+            </div>
+          </div>
+        </div>
+
+        {/* Average Session */}
+        {statistics.completedCount > 0 && (
+          <div className="mt-4 bg-gray-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Average Session Duration</span>
+              <span className="text-lg font-semibold text-gray-900">
+                {formatDurationText(statistics.averageTime)}
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Milestones & Achievements */}
+      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
+          <Award className="h-5 w-5 text-yellow-600" />
+          Milestones
+        </h3>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {/* First Fast */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.completedCount >= 1
+              ? 'border-yellow-400 bg-yellow-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">🎯</div>
+            <div className="text-xs font-medium text-gray-700">First Fast</div>
+          </div>
+
+          {/* 5 Sessions */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.completedCount >= 5
+              ? 'border-blue-400 bg-blue-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">⭐</div>
+            <div className="text-xs font-medium text-gray-700">5 Sessions</div>
+          </div>
+
+          {/* 10 Sessions */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.completedCount >= 10
+              ? 'border-purple-400 bg-purple-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">🏆</div>
+            <div className="text-xs font-medium text-gray-700">10 Sessions</div>
+          </div>
+
+          {/* 24 Hours Total */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.totalTime >= 24 * 60 * 60 * 1000
+              ? 'border-green-400 bg-green-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">⏰</div>
+            <div className="text-xs font-medium text-gray-700">24 Hours</div>
+          </div>
+
+          {/* 3 Day Streak */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.streak >= 3
+              ? 'border-orange-400 bg-orange-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">🔥</div>
+            <div className="text-xs font-medium text-gray-700">3 Day Streak</div>
+          </div>
+
+          {/* 7 Day Streak */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.streak >= 7
+              ? 'border-red-400 bg-red-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">💪</div>
+            <div className="text-xs font-medium text-gray-700">7 Day Streak</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fasting History */}
+      {statistics.completedSessions.length > 0 && (
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-indigo-600" />
+              Fasting History
+            </h3>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowHistory(!showHistory)}
+            >
+              {showHistory ? 'Hide' : 'Show'} History
+            </Button>
+          </div>
+
+          {showHistory && (
+            <div className="space-y-3 max-h-[400px] overflow-y-auto">
+              {statistics.completedSessions.map((session, index) => (
+                <div
+                  key={session.id}
+                  className="flex items-center justify-between bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">
+                        {new Date(session.startTime).toLocaleDateString('en-US', {
+                          weekday: 'short',
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {new Date(session.startTime).toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: '2-digit',
+                        })}
+                        {session.endTime && (
+                          <> - {new Date(session.endTime).toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                          })}</>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-semibold text-indigo-600">
+                      {formatDurationText(session.duration)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!showHistory && (
+            <div className="text-center text-sm text-gray-500 py-4">
+              Click &quot;Show History&quot; to view your past {statistics.completedCount} fasting {statistics.completedCount === 1 ? 'session' : 'sessions'}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Daily Content */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
