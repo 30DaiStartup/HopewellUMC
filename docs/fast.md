@@ -309,6 +309,248 @@ FASTING_EVENT = {
 - [ ] Participation rates over time
 - [ ] Export data for church records
 
+---
+
+## Advanced Tracker Features (My Tracker Section)
+
+### Health Metrics & Biometric Tracking
+
+**Core Metrics**
+- [ ] Weight tracking with trend graphs and goal setting
+- [ ] Body fat percentage monitoring
+- [ ] BMI calculator and tracking
+- [ ] Waist circumference measurements
+- [ ] Body composition tracking (muscle mass, body fat, water weight)
+
+**Metabolic Markers**
+- [ ] Blood glucose tracking (manual entry + CGM sync)
+- [ ] Blood ketone levels tracking (manual entry + meter sync)
+- [ ] Breath ketone tracking (Biosense integration)
+- [ ] Insulin sensitivity estimates
+- [ ] HbA1c tracking for long-term glucose control
+
+**Vitals Monitoring**
+- [ ] Heart rate tracking and correlation with fasting
+- [ ] Blood pressure logging
+- [ ] Resting heart rate trends
+- [ ] Heart rate variability (HRV) tracking
+- [ ] Sleep quality tracking and correlation with fasting
+- [ ] Energy level self-assessment (1-10 scale)
+
+**Hydration & Nutrition**
+- [ ] Water intake tracking with reminders
+- [ ] Electrolyte balance monitoring
+- [ ] Daily hydration goals and progress
+- [ ] Macro nutrient tracking (protein, carbs, fat)
+- [ ] Calorie counter for eating windows
+- [ ] Meal logging with timestamps
+
+### Fasting Zones & Metabolic States
+
+**Visual Fasting Zones Timeline**
+- [ ] Real-time fasting zone indicator (Anabolic → Catabolic → Fat Burning → Ketosis → Deep Ketosis → Autophagy)
+- [ ] Hour-by-hour body status visualization
+- [ ] Glycogen depletion timeline (12-16 hrs)
+- [ ] Fat burning initiation indicator (16-18 hrs)
+- [ ] Ketosis zone entry notification (18-24 hrs)
+- [ ] Deep ketosis zone (24-72 hrs)
+- [ ] Autophagy zone activation (24+ hrs, peak at 48-72 hrs)
+- [ ] Personalized zone timing based on metabolic profile
+
+**Metabolic State Predictions**
+- [ ] Real-time metabolic state calculator
+- [ ] Fat-burning mode with live tips and guidance
+- [ ] Ketosis probability estimator based on fast duration
+- [ ] Autophagy activation likelihood indicator
+- [ ] Body fuel source visualization (glucose vs fat vs ketones)
+- [ ] Estimated time to next metabolic milestone
+
+**Autophagy Tracking**
+- [ ] Autophagy stage timeline (early, active, peak, deep)
+- [ ] Visual autophagy progress indicator
+- [ ] Cellular repair benefits tracker
+- [ ] Autophagy-optimized fasting plans (24hr, 48hr, 72hr)
+- [ ] Autophagy benefits education (cellular cleanup, anti-aging, disease prevention)
+- [ ] Science-backed autophagy insights
+
+### Advanced Analytics & Insights
+
+**Correlation Charts**
+- [ ] Fast duration vs weight loss correlation
+- [ ] Ketone levels vs glucose levels scatter plots
+- [ ] Mood vs fasting duration correlation
+- [ ] Sleep quality vs fasting patterns
+- [ ] Energy levels vs metabolic state
+- [ ] Custom metric correlations (any metric vs any metric)
+- [ ] Multi-variable comparison charts
+
+**Trends & Forecasting**
+- [ ] Weight loss trend lines with forecasting
+- [ ] Average fasting duration over time
+- [ ] Ketone level trends and patterns
+- [ ] Glucose stability improvements
+- [ ] Fasting success rate patterns
+- [ ] Weekly/monthly progress reports
+- [ ] Goal achievement probability calculator
+- [ ] Predictive insights based on historical data
+
+**Personal Dashboards**
+- [ ] Customizable health metrics dashboard
+- [ ] Drag-and-drop widget system
+- [ ] Choose which metrics to display
+- [ ] Custom date range filtering
+- [ ] Export charts as images/PDFs
+- [ ] Share progress with accountability partner
+- [ ] Compare current vs previous periods
+
+### Wearables & Integration
+
+**Device Sync**
+- [ ] Apple Health integration (weight, heart rate, sleep, activity)
+- [ ] Fitbit integration (steps, heart rate, sleep, weight)
+- [ ] Oura Ring integration (sleep, HRV, readiness, activity)
+- [ ] Google Fit integration (activity, weight, nutrition)
+- [ ] Garmin integration (activity, vitals)
+- [ ] Withings scale integration (weight, body composition)
+- [ ] Continuous Glucose Monitor (CGM) sync (Dexcom, FreeStyle Libre)
+- [ ] Blood ketone meter sync (KETO-MOJO, Precision Xtra)
+- [ ] Biosense breath ketone analyzer integration
+
+**Auto-Sync Features**
+- [ ] Automatic metric updates from connected devices
+- [ ] Real-time data synchronization
+- [ ] Historical data import from wearables
+- [ ] Conflict resolution for duplicate entries
+- [ ] Device battery and connectivity status
+- [ ] Data source attribution (manual vs device)
+
+### Enhanced Fasting Protocols
+
+**Preset Fasting Plans**
+- [ ] 16:8 (Leangains protocol)
+- [ ] 18:6 (Modified Leangains)
+- [ ] 20:4 (Warrior Diet)
+- [ ] OMAD (One Meal A Day)
+- [ ] 5:2 (5 days normal, 2 days 500-600 cal)
+- [ ] Alternate Day Fasting (ADF)
+- [ ] Extended fasts (24hr, 36hr, 48hr, 72hr+)
+- [ ] Autophagy-optimized plans (48hr, 72hr cycles)
+- [ ] Circadian rhythm fasting (eating window aligned with daylight)
+- [ ] Custom fasting schedules (user-defined windows)
+
+**Adaptive Fasting**
+- [ ] AI-powered fasting recommendations based on progress
+- [ ] Difficulty adjustment (beginner → intermediate → advanced)
+- [ ] Personalized eating window suggestions
+- [ ] Fasting protocol switching based on goals
+- [ ] Weekend vs weekday schedules
+- [ ] Event-based fasting adjustments
+- [ ] Menstrual cycle-aware fasting for women
+- [ ] Performance-based protocol optimization
+
+**Fasting History**
+- [ ] Complete fasting log with all sessions
+- [ ] Longest fast achieved (personal record)
+- [ ] Total fasting hours (lifetime)
+- [ ] Average fasting duration (weekly/monthly)
+- [ ] Success rate tracking (completed vs broken fasts)
+- [ ] Fasting consistency score
+- [ ] Calendar view with fasting history
+- [ ] Export fasting data (CSV, PDF)
+
+### Nutrition & Meal Planning
+
+**Recipe Database**
+- [ ] 400+ healthy recipes for breaking fasts
+- [ ] Keto-friendly recipes
+- [ ] Low-glycemic meal options
+- [ ] Portion-controlled serving suggestions
+- [ ] Macro breakdown for each recipe
+- [ ] Recipe search and filtering
+- [ ] Favorite recipes collection
+- [ ] Meal prep planning tools
+
+**Eating Window Optimization**
+- [ ] Meal timing recommendations
+- [ ] Pre-fast meal suggestions (low-glycemic, high-protein)
+- [ ] Breaking fast meal suggestions (gentle refeeding)
+- [ ] Nutrient timing for workouts
+- [ ] Hydration schedule during fasting
+- [ ] Supplement recommendations (electrolytes, vitamins)
+- [ ] Food sensitivity tracking
+- [ ] Eating window meal planner
+
+**Food Logging**
+- [ ] Detailed food diary during eating windows
+- [ ] Barcode scanner for packaged foods
+- [ ] Calorie tracking
+- [ ] Macro nutrient breakdown (protein, carbs, fat, fiber)
+- [ ] Micro nutrient tracking (vitamins, minerals)
+- [ ] Meal photos and notes
+- [ ] Restaurant meal database
+- [ ] Custom food creation
+
+### Educational Content
+
+**Fasting Science**
+- [ ] Interactive fasting timeline (what happens hour-by-hour)
+- [ ] Autophagy education center with videos and articles
+- [ ] Ketosis explained with visual diagrams
+- [ ] Metabolic switching science
+- [ ] Hormonal changes during fasting (insulin, ghrelin, leptin, HGH)
+- [ ] Mitochondrial health benefits
+- [ ] Inflammation reduction science
+- [ ] Longevity research and studies
+
+**Stage-Based Tips**
+- [ ] Real-time tips based on current fasting stage
+- [ ] "What's happening in your body right now" updates
+- [ ] Common symptoms and how to handle them
+- [ ] When to stop a fast (safety guidelines)
+- [ ] Electrolyte management education
+- [ ] Exercise during fasting guidelines
+- [ ] Mental clarity optimization tips
+
+**Resource Library**
+- [ ] Video tutorials on fasting techniques
+- [ ] Podcast library on fasting and health
+- [ ] Scientific studies database
+- [ ] Expert interviews and Q&As
+- [ ] Success stories from other users
+- [ ] FAQ section with searchable questions
+- [ ] Glossary of fasting terms
+
+### Gamification & Motivation
+
+**Achievement System**
+- [ ] Fasting streaks (consecutive days with successful fasts)
+- [ ] Progressive badges (First 16hr, First 24hr, 7-Day Streak, 30-Day Streak, Autophagy Master)
+- [ ] Level-up system (Beginner → Intermediate → Advanced → Expert → Master)
+- [ ] Personal records tracking (longest fast, most hours in a month)
+- [ ] Milestone celebrations with confetti animations
+- [ ] Unlock new features as you progress
+- [ ] Achievement showcase on profile
+- [ ] Share achievements to social feed
+
+**Challenges**
+- [ ] Weekly fasting challenges
+- [ ] Monthly autophagy challenges
+- [ ] Group challenges with other users
+- [ ] Personal goal challenges (lose 10 lbs, fast 100 hrs this month)
+- [ ] Seasonal challenges (summer shred, winter wellness)
+- [ ] Challenge leaderboards
+- [ ] Reward system for challenge completion
+
+**Motivation Tools**
+- [ ] Daily motivational quotes
+- [ ] Progress photos (before/after comparisons)
+- [ ] Measurement tracking (photos + metrics over time)
+- [ ] Goal visualization (progress bars, charts)
+- [ ] Reminder notifications with encouraging messages
+- [ ] "Why I'm fasting" personal statement
+- [ ] Vision board integration
+- [ ] Accountability partner matching
+
 ### Low Priority
 
 **Advanced Features**
