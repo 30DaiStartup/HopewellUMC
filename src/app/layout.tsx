@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "tippy.js/dist/tippy.css";
 import ClientBody from "./ClientBody";
 import Script from "next/script";
 

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
 import { WeightTracker } from './weight-tracker';
+import { FastingZonesTimeline } from '@/components/fasting/fasting-zones-timeline';
 
 export function FastingTracker() {
   const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries, deleteJournalEntry } = useFasting();
@@ -214,6 +215,12 @@ export function FastingTracker() {
           )}
         </div>
       </div>
+
+      {/* Fasting Zones Timeline */}
+      <FastingZonesTimeline
+        elapsedTimeMs={elapsedTime}
+        isActive={currentSession !== null}
+      />
 
       {/* Statistics Dashboard */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
