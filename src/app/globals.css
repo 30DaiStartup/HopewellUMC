@@ -72,3 +72,66 @@
     paint-order: stroke fill;
   }
 }
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  @apply focus:outline-none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Mention Styles */
+.mention {
+  @apply bg-indigo-100 text-indigo-700 rounded px-1 py-0.5 font-medium no-underline;
+}
+
+.mention:hover {
+  @apply bg-indigo-200;
+}
+
+/* Rich Text Prose Styles */
+.prose {
+  @apply text-gray-800;
+}
+
+.prose p {
+  @apply mb-2;
+}
+
+.prose strong {
+  @apply font-bold text-gray-900;
+}
+
+.prose em {
+  @apply italic;
+}
+
+.prose ul {
+  @apply list-disc pl-5 mb-2;
+}
+
+.prose ol {
+  @apply list-decimal pl-5 mb-2;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 my-2;
+}
+
+.prose code {
+  @apply bg-gray-100 rounded px-1 py-0.5 text-sm font-mono;
+}
+
+.prose a {
+  @apply text-indigo-600 hover:text-indigo-700 underline;
+}

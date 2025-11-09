@@ -43,7 +43,7 @@ export interface Post {
   userAvatar?: string;
   content: string;
   mediaUrl?: string;
-  mediaType?: 'image' | 'video';
+  mediaType?: 'image' | 'video' | 'gif';
   linkPreview?: LinkPreview;
   createdAt: Date;
   likes: string[]; // array of user IDs

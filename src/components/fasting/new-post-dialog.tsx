@@ -1,21 +1,28 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Plus, Image as ImageIcon, X, Link as LinkIcon } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Plus, Image as ImageIcon, X, Link as LinkIcon, Film } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { detectUrl, fetchLinkPreview } from '@/lib/utils';
+import { compressImage, validateVideo, readFileAsDataURL } from '@/lib/media-utils';
 import type { LinkPreview } from '@/lib/fasting-types';
+import { RichTextEditor } from './rich-text-editor';
+import { GifPicker } from './gif-picker';
 
 export function NewPostDialog() {
   const { currentUser, addPost } = useFasting();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
-  const [mediaType, setMediaType] = useState<'image' | 'video' | null>(null);
+  const [mediaType, setMediaType] = useState<'image' | 'video' | 'gif' | null>(null);
   const [linkPreview, setLinkPreview] = useState<LinkPreview | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
+  const [showGifPicker, setShowGifPicker] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Detect URLs and fetch link previews
   useEffect(() => {
@@ -33,38 +40,95 @@ export function NewPostDialog() {
     }, 500); // Debounce for 500ms
 
     return () => clearTimeout(timeoutId);
-  }, [content]);
+  }, [content, linkPreview]);
 
-  const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file size (10MB max)
-    if (file.size > 10 * 1024 * 1024) {
-      alert('File size must be less than 10MB');
-      return;
+    await processFile(file);
+  };
+
+  const processFile = async (file: File) => {
+    setIsProcessing(true);
+
+    try {
+      // Validate file size (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+
+      // Validate file type
+      const isImage = file.type.startsWith('image/');
+      const isVideo = file.type.startsWith('video/');
+
+      if (!isImage && !isVideo) {
+        alert('Please upload an image or video file');
+        return;
+      }
+
+      // Process image with compression
+      if (isImage) {
+        const compressedFile = await compressImage(file);
+        const dataUrl = await readFileAsDataURL(compressedFile);
+        setMediaPreview(dataUrl);
+        setMediaType('image');
+      }
+
+      // Process video with validation
+      if (isVideo) {
+        const validation = await validateVideo(file, 15);
+
+        if (!validation.valid) {
+          alert(validation.error || 'Video validation failed');
+          return;
+        }
+
+        const dataUrl = await readFileAsDataURL(file);
+        setMediaPreview(dataUrl);
+        setMediaType('video');
+      }
+    } catch (error) {
+      console.error('Error processing file:', error);
+      alert('Failed to process file');
+    } finally {
+      setIsProcessing(false);
     }
+  };
 
-    // Validate file type
-    const isImage = file.type.startsWith('image/');
-    const isVideo = file.type.startsWith('video/');
+  const handleGifSelect = (gifUrl: string) => {
+    setMediaPreview(gifUrl);
+    setMediaType('gif');
+  };
 
-    if (!isImage && !isVideo) {
-      alert('Please upload an image or video file');
-      return;
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const file = files[0];
+
+    if (file) {
+      await processFile(file);
     }
-
-    // Create preview URL
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setMediaPreview(reader.result as string);
-      setMediaType(isImage ? 'image' : 'video');
-    };
-    reader.readAsDataURL(file);
   };
 
   const handleSubmit = () => {
-    if (!content.trim() && !mediaPreview) {
+    // Strip HTML tags to check if there's actual content
+    const textContent = content.replace(/<[^>]*>/g, '').trim();
+
+    if (!textContent && !mediaPreview) {
       alert('Please add some content or media');
       return;
     }
@@ -111,12 +175,17 @@ export function NewPostDialog() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Share Your Journey</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4 mt-4">
+        <div
+          className="space-y-4 mt-4"
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           {/* User Info */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
@@ -125,16 +194,34 @@ export function NewPostDialog() {
             <p className="font-semibold text-gray-900">{currentUser.displayName}</p>
           </div>
 
-          {/* Content Input */}
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="What's on your heart? Share your reflections, struggles, or victories..."
-            className="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          {/* Drag and Drop Overlay */}
+          {isDragging && (
+            <div className="absolute inset-0 bg-indigo-50 bg-opacity-90 border-4 border-dashed border-indigo-400 rounded-lg flex items-center justify-center z-50">
+              <div className="text-center">
+                <ImageIcon className="h-12 w-12 text-indigo-600 mx-auto mb-2" />
+                <p className="text-lg font-semibold text-indigo-600">Drop your media here</p>
+              </div>
+            </div>
+          )}
+
+          {/* Rich Text Editor */}
+          <RichTextEditor
+            content={content}
+            onChange={setContent}
+            onImageSelect={() => fileInputRef.current?.click()}
+            onGifSelect={() => setShowGifPicker(true)}
           />
 
+          {/* Processing Indicator */}
+          {isProcessing && (
+            <div className="flex items-center justify-center p-4 bg-gray-50 rounded-lg">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+              <span className="ml-2 text-gray-600">Processing media...</span>
+            </div>
+          )}
+
           {/* Media Preview */}
-          {mediaPreview && (
+          {mediaPreview && !isProcessing && (
             <div className="relative rounded-lg overflow-hidden bg-gray-100">
               <button
                 onClick={handleRemoveMedia}
@@ -143,7 +230,7 @@ export function NewPostDialog() {
                 <X className="h-4 w-4" />
               </button>
 
-              {mediaType === 'image' ? (
+              {mediaType === 'image' || mediaType === 'gif' ? (
                 <img
                   src={mediaPreview}
                   alt="Upload preview"
@@ -222,29 +309,38 @@ export function NewPostDialog() {
 
           {/* Actions */}
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            <label className="cursor-pointer">
-              <input
-                type="file"
-                accept="image/*,video/*"
-                onChange={handleMediaUpload}
-                className="hidden"
-              />
-              <div className="flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition-colors">
-                <ImageIcon className="h-5 w-5" />
-                <span className="text-sm font-medium">Add Photo/Video</span>
-              </div>
-            </label>
+            <div className="flex items-center gap-4">
+              <p className="text-xs text-gray-500">
+                Drag and drop media, or use the toolbar buttons
+              </p>
+            </div>
 
             <Button
               onClick={handleSubmit}
-              disabled={!content.trim() && !mediaPreview}
+              disabled={(!content.replace(/<[^>]*>/g, '').trim() && !mediaPreview) || isProcessing}
               className="bg-indigo-600 hover:bg-indigo-700"
             >
               Post
             </Button>
           </div>
+
+          {/* Hidden File Input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*,video/*"
+            onChange={handleMediaUpload}
+            className="hidden"
+          />
         </div>
       </DialogContent>
+
+      {/* GIF Picker Dialog */}
+      <GifPicker
+        open={showGifPicker}
+        onClose={() => setShowGifPicker(false)}
+        onSelect={handleGifSelect}
+      />
     </Dialog>
   );
 }
