@@ -66,7 +66,7 @@ interface FastingContextType {
   // Fasting Tracker
   fastingSessions: FastingSession[];
   currentSession: FastingSession | null;
-  startFasting: () => Promise<void>;
+  startFasting: (shareWithCommunity?: boolean) => Promise<void>;
   endFasting: () => Promise<void>;
   deleteFastingSession: (sessionId: string) => Promise<void>;
 
@@ -331,7 +331,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
   // Fasting tracker functions
   const currentSession = fastingSessions.find(s => s.isActive && s.userId === currentUser?.id) || null;
 
-  const startFasting = async (): Promise<void> => {
+  const startFasting = async (shareWithCommunity = false): Promise<void> => {
     if (!currentUser) return;
 
     try {
@@ -341,6 +341,11 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         isActive: true,
         duration: 0,
       });
+
+      // If sharing to community, create a post
+      if (shareWithCommunity) {
+        await addPost('🙏 I\'ve just started my fast! Pray for me as I seek God during this time. #FastingJourney');
+      }
     } catch (error) {
       console.error('Start fasting error:', error);
     }
