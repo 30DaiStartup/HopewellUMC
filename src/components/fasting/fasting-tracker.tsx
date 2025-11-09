@@ -6,6 +6,7 @@ import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
+import { WeightTracker } from './weight-tracker';
 import { FastingZonesTimeline } from '@/components/fasting/fasting-zones-timeline';
 
 export function FastingTracker() {
@@ -545,6 +546,9 @@ export function FastingTracker() {
           </div>
         )}
       </div>
+
+      {/* Weight Tracking Section */}
+      <WeightTracker />
     </div>
   );
 }

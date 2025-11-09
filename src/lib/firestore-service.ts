@@ -18,13 +18,15 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { db, isConfigured } from './firebase';
-import type { User, Post, Comment, JournalEntry, FastingSession } from './fasting-types';
+import type { User, Post, Comment, JournalEntry, FastingSession, WeightEntry, WeightGoal } from './fasting-types';
 
 // Collection names
 const USERS_COLLECTION = 'users';
 const POSTS_COLLECTION = 'posts';
 const JOURNAL_COLLECTION = 'journal_entries';
 const SESSIONS_COLLECTION = 'fasting_sessions';
+const WEIGHT_ENTRIES_COLLECTION = 'weight_entries';
+const WEIGHT_GOALS_COLLECTION = 'weight_goals';
 
 // Helper to ensure Firestore is configured
 function ensureConfigured() {
@@ -447,4 +449,169 @@ export function subscribeToUserJournal(userId: string, callback: (entries: Journ
 export async function deleteJournalEntry(entryId: string): Promise<void> {
   ensureConfigured();
   await deleteDoc(doc(db!,JOURNAL_COLLECTION, entryId));
+}
+
+// ============================================================================
+// WEIGHT ENTRY OPERATIONS
+// ============================================================================
+
+export async function createWeightEntry(entryData: Omit<WeightEntry, 'id' | 'createdAt'>): Promise<string> {
+  ensureConfigured();
+  const docRef = await addDoc(collection(db!,WEIGHT_ENTRIES_COLLECTION), {
+    ...entryData,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function getUserWeightEntries(userId: string): Promise<WeightEntry[]> {
+  ensureConfigured();
+  const q = query(
+    collection(db!,WEIGHT_ENTRIES_COLLECTION),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc')
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      userId: data.userId,
+      weight: data.weight,
+      unit: data.unit,
+      notes: data.notes,
+      createdAt: data.createdAt?.toDate() || new Date(),
+    };
+  });
+}
+
+// Real-time listener for user's weight entries
+export function subscribeToUserWeightEntries(userId: string, callback: (entries: WeightEntry[]) => void) {
+  if (!isConfigured || !db) {
+    callback([]);
+    return () => {};
+  }
+
+  const q = query(
+    collection(db!,WEIGHT_ENTRIES_COLLECTION),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc')
+  );
+
+  return onSnapshot(q, (snapshot) => {
+    const entries = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        userId: data.userId,
+        weight: data.weight,
+        unit: data.unit,
+        notes: data.notes,
+        createdAt: data.createdAt?.toDate() || new Date(),
+      };
+    });
+    callback(entries);
+  });
+}
+
+export async function deleteWeightEntry(entryId: string): Promise<void> {
+  ensureConfigured();
+  await deleteDoc(doc(db!,WEIGHT_ENTRIES_COLLECTION, entryId));
+}
+
+// ============================================================================
+// WEIGHT GOAL OPERATIONS
+// ============================================================================
+
+export async function createWeightGoal(goalData: Omit<WeightGoal, 'id' | 'createdAt'>): Promise<string> {
+  ensureConfigured();
+  const data: Record<string, unknown> = {
+    userId: goalData.userId,
+    targetWeight: goalData.targetWeight,
+    unit: goalData.unit,
+    createdAt: serverTimestamp(),
+  };
+
+  if (goalData.targetDate) {
+    data.targetDate = Timestamp.fromDate(goalData.targetDate);
+  }
+
+  const docRef = await addDoc(collection(db!,WEIGHT_GOALS_COLLECTION), data);
+  return docRef.id;
+}
+
+export async function getUserWeightGoal(userId: string): Promise<WeightGoal | null> {
+  ensureConfigured();
+  const q = query(
+    collection(db!,WEIGHT_GOALS_COLLECTION),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc'),
+    limit(1)
+  );
+
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) return null;
+
+  const doc = snapshot.docs[0];
+  const data = doc.data();
+  return {
+    id: doc.id,
+    userId: data.userId,
+    targetWeight: data.targetWeight,
+    unit: data.unit,
+    targetDate: data.targetDate?.toDate(),
+    createdAt: data.createdAt?.toDate() || new Date(),
+  };
+}
+
+// Real-time listener for user's weight goal
+export function subscribeToUserWeightGoal(userId: string, callback: (goal: WeightGoal | null) => void) {
+  if (!isConfigured || !db) {
+    callback(null);
+    return () => {};
+  }
+
+  const q = query(
+    collection(db!,WEIGHT_GOALS_COLLECTION),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc'),
+    limit(1)
+  );
+
+  return onSnapshot(q, (snapshot) => {
+    if (snapshot.empty) {
+      callback(null);
+      return;
+    }
+
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+    callback({
+      id: doc.id,
+      userId: data.userId,
+      targetWeight: data.targetWeight,
+      unit: data.unit,
+      targetDate: data.targetDate?.toDate(),
+      createdAt: data.createdAt?.toDate() || new Date(),
+    });
+  });
+}
+
+export async function updateWeightGoal(goalId: string, updates: Partial<WeightGoal>): Promise<void> {
+  ensureConfigured();
+  const updateData: Record<string, unknown> = { ...updates };
+  delete updateData.id;
+  delete updateData.createdAt;
+
+  if (updates.targetDate) {
+    updateData.targetDate = Timestamp.fromDate(updates.targetDate);
+  }
+
+  await updateDoc(doc(db!,WEIGHT_GOALS_COLLECTION, goalId), updateData);
+}
+
+export async function deleteWeightGoal(goalId: string): Promise<void> {
+  ensureConfigured();
+  await deleteDoc(doc(db!,WEIGHT_GOALS_COLLECTION, goalId));
 }
