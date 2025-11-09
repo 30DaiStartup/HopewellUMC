@@ -11,12 +11,6 @@ export const FASTING_EVENT: FastingEvent = {
 // Bible scriptures focused on fasting
 export const SCRIPTURES: Scripture[] = [
   {
-    id: '1',
-    reference: 'Matthew 6:16-18',
-    text: 'When you fast, do not look somber as the hypocrites do, for they disfigure their faces to show others they are fasting. Truly I tell you, they have received their reward in full. But when you fast, put oil on your head and wash your face, so that it will not be obvious to others that you are fasting, but only to your Father, who is unseen; and your Father, who sees what is done in secret, will reward you.',
-    theme: 'discipline',
-  },
-  {
     id: '2',
     reference: 'Isaiah 58:6-7',
     text: 'Is not this the kind of fasting I have chosen: to loose the chains of injustice and untie the cords of the yoke, to set the oppressed free and break every yoke? Is it not to share your food with the hungry and to provide the poor wanderer with shelter—when you see the naked, to clothe them, and not to turn away from your own flesh and blood?',
@@ -69,6 +63,12 @@ export const SCRIPTURES: Scripture[] = [
     reference: 'Luke 2:37',
     text: 'And then was a widow until she was eighty-four. She never left the temple but worshiped night and day, fasting and praying.',
     theme: 'faith',
+  },
+  {
+    id: '1',
+    reference: 'Matthew 6:16-18',
+    text: 'When you fast, do not look somber as the hypocrites do, for they disfigure their faces to show others they are fasting. Truly I tell you, they have received their reward in full. But when you fast, put oil on your head and wash your face, so that it will not be obvious to others that you are fasting, but only to your Father, who is unseen; and your Father, who sees what is done in secret, will reward you.',
+    theme: 'discipline',
   },
 ];
 
