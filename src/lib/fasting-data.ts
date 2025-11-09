@@ -129,6 +129,10 @@ export const FASTING_TIPS: FastingTip[] = [
 
 // Helper function to get daily scripture
 export function getDailyScripture(day: number): Scripture {
+  // Handle day 0 or negative days (before fast starts)
+  if (day <= 0) {
+    return SCRIPTURES[0];
+  }
   const index = (day - 1) % SCRIPTURES.length;
   return SCRIPTURES[index];
 }
@@ -137,6 +141,11 @@ export function getDailyScripture(day: number): Scripture {
 export function getDailyTip(day: number): FastingTip {
   const dayTip = FASTING_TIPS.find(tip => tip.day === day);
   if (dayTip) return dayTip;
+
+  // Handle day 0 or negative days (before fast starts)
+  if (day <= 0) {
+    return FASTING_TIPS[0];
+  }
 
   const index = (day - 1) % FASTING_TIPS.length;
   return FASTING_TIPS[index];
