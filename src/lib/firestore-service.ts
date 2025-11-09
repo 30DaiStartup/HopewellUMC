@@ -133,12 +133,27 @@ export function subscribeToParticipants(callback: (users: User[]) => void) {
 
 export async function createPost(postData: Omit<Post, 'id' | 'createdAt'>): Promise<string> {
   ensureConfigured();
-  const docRef = await addDoc(collection(db!,POSTS_COLLECTION), {
-    ...postData,
+
+  // Build the post data, only including optional fields if they are defined
+  const data: Record<string, unknown> = {
+    userId: postData.userId,
+    userName: postData.userName,
+    userAvatar: postData.userAvatar,
+    content: postData.content,
     createdAt: serverTimestamp(),
     likes: [],
     comments: [],
-  });
+  };
+
+  // Only add mediaUrl and mediaType if they are defined
+  if (postData.mediaUrl !== undefined) {
+    data.mediaUrl = postData.mediaUrl;
+  }
+  if (postData.mediaType !== undefined) {
+    data.mediaType = postData.mediaType;
+  }
+
+  const docRef = await addDoc(collection(db!,POSTS_COLLECTION), data);
   return docRef.id;
 }
 
