@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Home, Clock, BookOpen, User as UserIcon, LogOut } from 'lucide-react';
 import { FastingProvider, useFasting } from '@/contexts/fasting-context';
 import { CountdownTimer } from '@/components/fasting/countdown-timer';
@@ -51,8 +52,18 @@ function FastingAppContent() {
                   )}
 
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-sm">
-                      {currentUser.displayName.charAt(0).toUpperCase()}
+                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-sm overflow-hidden">
+                      {currentUser.avatar ? (
+                        <Image
+                          src={currentUser.avatar}
+                          alt={currentUser.displayName}
+                          width={32}
+                          height={32}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>{currentUser.displayName.charAt(0).toUpperCase()}</span>
+                      )}
                     </div>
                     <span className="text-sm font-medium text-gray-700 hidden sm:inline">
                       {currentUser.displayName}
