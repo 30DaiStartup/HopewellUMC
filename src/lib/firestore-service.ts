@@ -341,6 +341,11 @@ export async function updateFastingSession(sessionId: string, updates: Partial<F
   await updateDoc(doc(db!,SESSIONS_COLLECTION, sessionId), updateData);
 }
 
+export async function deleteFastingSession(sessionId: string): Promise<void> {
+  ensureConfigured();
+  await deleteDoc(doc(db!,SESSIONS_COLLECTION, sessionId));
+}
+
 // Real-time listener for user's fasting sessions
 export function subscribeToUserSessions(userId: string, callback: (sessions: FastingSession[]) => void) {
   if (!isConfigured || !db) {

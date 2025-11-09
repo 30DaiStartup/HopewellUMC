@@ -25,6 +25,7 @@ import {
   subscribeToUserSessions,
   createFastingSession,
   updateFastingSession,
+  deleteFastingSession as firestoreDeleteFastingSession,
   getUserJournalEntries,
   subscribeToUserJournal,
   createJournalEntry,
@@ -57,6 +58,7 @@ interface FastingContextType {
   currentSession: FastingSession | null;
   startFasting: () => Promise<void>;
   endFasting: () => Promise<void>;
+  deleteFastingSession: (sessionId: string) => Promise<void>;
 
   // Journal
   journalEntries: JournalEntry[];
@@ -310,6 +312,16 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const deleteFastingSession = async (sessionId: string): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await firestoreDeleteFastingSession(sessionId);
+    } catch (error) {
+      console.error('Delete fasting session error:', error);
+    }
+  };
+
   // Journal functions
   const addJournalEntry = async (content: string, mood?: JournalEntry['mood'], shareToFeed = false): Promise<void> => {
     if (!currentUser) return;
@@ -354,6 +366,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         currentSession,
         startFasting,
         endFasting,
+        deleteFastingSession,
         journalEntries,
         addJournalEntry,
       }}

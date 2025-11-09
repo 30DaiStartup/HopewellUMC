@@ -1,19 +1,20 @@
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
-import { Play, Square, BookOpen, Smile, Meh, Frown, Sparkles, TrendingUp, Clock, Award, Calendar, Target, Flame } from 'lucide-react';
+import { Play, Square, BookOpen, Smile, Meh, Frown, Sparkles, TrendingUp, Clock, Award, Calendar, Target, Flame, Trash2 } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
 
 export function FastingTracker() {
-  const { currentUser, currentSession, fastingSessions, startFasting, endFasting, addJournalEntry, journalEntries } = useFasting();
+  const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries } = useFasting();
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [journalContent, setJournalContent] = useState('');
   const [selectedMood, setSelectedMood] = useState<'joyful' | 'peaceful' | 'struggling' | 'hopeful' | undefined>();
   const [shareToFeed, setShareToFeed] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [shareWithCommunity, setShareWithCommunity] = useState(true);
 
   const currentDay = getCurrentFastDay();
   const dailyTip = getDailyTip(currentDay);
@@ -179,16 +180,27 @@ export function FastingTracker() {
         </div>
 
         {/* Control Buttons */}
-        <div className="flex gap-3 justify-center">
+        <div className="flex flex-col items-center gap-3">
           {!currentSession ? (
-            <Button
-              onClick={startFasting}
-              className="bg-green-600 hover:bg-green-700 gap-2"
-              size="lg"
-            >
-              <Play className="h-5 w-5" />
-              Start Fasting
-            </Button>
+            <>
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
+                <input
+                  type="checkbox"
+                  checked={shareWithCommunity}
+                  onChange={(e) => setShareWithCommunity(e.target.checked)}
+                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span>Share my progress with the community</span>
+              </label>
+              <Button
+                onClick={startFasting}
+                className="bg-green-600 hover:bg-green-700 gap-2"
+                size="lg"
+              >
+                <Play className="h-5 w-5" />
+                Start Fasting
+              </Button>
+            </>
           ) : (
             <Button
               onClick={endFasting}
@@ -288,26 +300,6 @@ export function FastingTracker() {
             <div className="text-xs font-medium text-gray-700">First Fast</div>
           </div>
 
-          {/* 5 Sessions */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
-            statistics.completedCount >= 5
-              ? 'border-blue-400 bg-blue-50'
-              : 'border-gray-200 bg-gray-50 opacity-50'
-          }`}>
-            <div className="text-2xl mb-1">⭐</div>
-            <div className="text-xs font-medium text-gray-700">5 Sessions</div>
-          </div>
-
-          {/* 10 Sessions */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
-            statistics.completedCount >= 10
-              ? 'border-purple-400 bg-purple-50'
-              : 'border-gray-200 bg-gray-50 opacity-50'
-          }`}>
-            <div className="text-2xl mb-1">🏆</div>
-            <div className="text-xs font-medium text-gray-700">10 Sessions</div>
-          </div>
-
           {/* 24 Hours Total */}
           <div className={`border-2 rounded-lg p-3 text-center transition-all ${
             statistics.totalTime >= 24 * 60 * 60 * 1000
@@ -328,14 +320,34 @@ export function FastingTracker() {
             <div className="text-xs font-medium text-gray-700">3 Day Streak</div>
           </div>
 
-          {/* 7 Day Streak */}
+          {/* 5 Day Streak */}
           <div className={`border-2 rounded-lg p-3 text-center transition-all ${
-            statistics.streak >= 7
+            statistics.streak >= 5
               ? 'border-red-400 bg-red-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
             <div className="text-2xl mb-1">💪</div>
-            <div className="text-xs font-medium text-gray-700">7 Day Streak</div>
+            <div className="text-xs font-medium text-gray-700">5 Day Streak</div>
+          </div>
+
+          {/* 3 Sessions */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.completedCount >= 3
+              ? 'border-blue-400 bg-blue-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">⭐</div>
+            <div className="text-xs font-medium text-gray-700">3 Sessions</div>
+          </div>
+
+          {/* 5 Sessions */}
+          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+            statistics.completedCount >= 5
+              ? 'border-purple-400 bg-purple-50'
+              : 'border-gray-200 bg-gray-50 opacity-50'
+          }`}>
+            <div className="text-2xl mb-1">🏆</div>
+            <div className="text-xs font-medium text-gray-700">5 Sessions</div>
           </div>
         </div>
       </div>
@@ -391,10 +403,23 @@ export function FastingTracker() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-lg font-semibold text-indigo-600">
-                      {formatDurationText(session.duration)}
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-lg font-semibold text-indigo-600">
+                        {formatDurationText(session.duration)}
+                      </div>
                     </div>
+                    <button
+                      onClick={() => {
+                        if (confirm('Are you sure you want to delete this fasting session?')) {
+                          deleteFastingSession(session.id);
+                        }
+                      }}
+                      className="text-gray-400 hover:text-red-500 transition-colors p-1"
+                      title="Delete session"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
               ))}
