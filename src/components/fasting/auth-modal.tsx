@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { LogIn, UserPlus } from 'lucide-react';
+import { LogIn, UserPlus, Mail } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -13,19 +13,29 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ open, onClose }: AuthModalProps) {
-  const { login, loginWithGoogle, signup } = useFasting();
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const { login, loginWithGoogle, signup, sendPasswordlessLink } = useFasting();
+  const [mode, setMode] = useState<'login' | 'signup' | 'passwordless'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     try {
-      if (mode === 'login') {
+      if (mode === 'passwordless') {
+        const result = await sendPasswordlessLink(email);
+        if (result) {
+          setSuccess('Check your email! We sent you a magic sign-in link.');
+          setEmail('');
+        } else {
+          setError('Failed to send sign-in link');
+        }
+      } else if (mode === 'login') {
         const success = await login(email, password);
         if (success) {
           onClose();
@@ -71,11 +81,13 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
     setPassword('');
     setDisplayName('');
     setError('');
+    setSuccess('');
   };
 
-  const switchMode = () => {
-    setMode(mode === 'login' ? 'signup' : 'login');
+  const switchMode = (newMode: 'login' | 'signup' | 'passwordless') => {
+    setMode(newMode);
     setError('');
+    setSuccess('');
   };
 
   return (
@@ -83,7 +95,7 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
       <DialogContent className="sm:max-w-[450px]">
         <DialogHeader>
           <DialogTitle className="text-2xl">
-            {mode === 'login' ? 'Welcome Back' : 'Join the Fast'}
+            {mode === 'login' ? 'Welcome Back' : mode === 'signup' ? 'Join the Fast' : 'Sign In Without Password'}
           </DialogTitle>
         </DialogHeader>
 
@@ -155,22 +167,30 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-              />
-            </div>
+            {mode !== 'passwordless' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            )}
 
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
                 {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
+                {success}
               </div>
             )}
 
@@ -180,27 +200,46 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
                   <LogIn className="h-4 w-4" />
                   Sign In
                 </>
-              ) : (
+              ) : mode === 'signup' ? (
                 <>
                   <UserPlus className="h-4 w-4" />
                   Create Account
+                </>
+              ) : (
+                <>
+                  <Mail className="h-4 w-4" />
+                  Send Magic Link
                 </>
               )}
             </Button>
           </form>
 
           {/* Switch Mode */}
-          <div className="text-center text-sm">
-            <span className="text-gray-600">
-              {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
-            </span>
-            <button
-              onClick={switchMode}
-              className="text-indigo-600 hover:text-indigo-700 font-medium"
-              type="button"
-            >
-              {mode === 'login' ? 'Sign up' : 'Sign in'}
-            </button>
+          <div className="text-center text-sm space-y-2">
+            <div>
+              <span className="text-gray-600">
+                {mode === 'login' ? "Don't have an account? " : mode === 'signup' ? 'Already have an account? ' : 'Have a password? '}
+              </span>
+              <button
+                onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                className="text-indigo-600 hover:text-indigo-700 font-medium"
+                type="button"
+              >
+                {mode === 'login' ? 'Sign up' : mode === 'signup' ? 'Sign in' : 'Sign in with password'}
+              </button>
+            </div>
+            {mode !== 'passwordless' && (
+              <div>
+                <span className="text-gray-600">Prefer passwordless? </span>
+                <button
+                  onClick={() => switchMode('passwordless')}
+                  className="text-indigo-600 hover:text-indigo-700 font-medium"
+                  type="button"
+                >
+                  Use magic link
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>

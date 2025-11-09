@@ -5,7 +5,11 @@ import {
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
   User as FirebaseUser,
+  ActionCodeSettings,
 } from 'firebase/auth';
 import { auth, isConfigured } from './firebase';
 import { createUser, getUser } from './firestore-service';
@@ -170,4 +174,99 @@ export function getCurrentFirebaseUser(): FirebaseUser | null {
 export function isAuthenticated(): boolean {
   if (!isConfigured || !auth) return false;
   return auth.currentUser !== null;
+}
+
+// ============================================================================
+// PASSWORDLESS AUTHENTICATION (EMAIL LINK)
+// ============================================================================
+
+/**
+ * Send a passwordless sign-in link to the user's email
+ */
+export async function sendPasswordlessSignInLink(email: string): Promise<void> {
+  ensureConfigured();
+
+  const actionCodeSettings: ActionCodeSettings = {
+    // URL to redirect to after email link is clicked
+    url: `${window.location.origin}/auth/complete-signin`,
+    handleCodeInApp: true,
+  };
+
+  try {
+    await sendSignInLinkToEmail(auth!, email, actionCodeSettings);
+    // Save the email locally so we can complete sign-in
+    window.localStorage.setItem('emailForSignIn', email);
+  } catch (error) {
+    console.error('Error sending sign-in link:', error);
+    const message = error instanceof Error ? error.message : 'Failed to send sign-in link';
+    throw new Error(message);
+  }
+}
+
+/**
+ * Check if the current URL is a sign-in email link
+ */
+export function isPasswordlessSignInLink(emailLink?: string): boolean {
+  if (!isConfigured || !auth) return false;
+  const url = emailLink || window.location.href;
+  return isSignInWithEmailLink(auth, url);
+}
+
+/**
+ * Complete the passwordless sign-in process
+ */
+export async function completePasswordlessSignIn(
+  email: string,
+  emailLink?: string
+): Promise<User> {
+  ensureConfigured();
+
+  const url = emailLink || window.location.href;
+
+  if (!isSignInWithEmailLink(auth!, url)) {
+    throw new Error('Invalid sign-in link');
+  }
+
+  try {
+    const userCredential = await signInWithEmailLink(auth!, email, url);
+    const firebaseUser = userCredential.user;
+
+    // Check if user exists in Firestore
+    let user = await getUser(firebaseUser.uid);
+
+    if (!user) {
+      // Create new user document for first-time users
+      const userData: Omit<User, 'id'> = {
+        email: firebaseUser.email || email,
+        displayName: firebaseUser.email?.split('@')[0] || 'Anonymous',
+        joinedAt: new Date(),
+        isFasting: false,
+        isAdmin: false,
+      };
+
+      await createUser(firebaseUser.uid, userData);
+
+      user = {
+        id: firebaseUser.uid,
+        ...userData,
+      };
+    }
+
+    // Clear the saved email from localStorage
+    window.localStorage.removeItem('emailForSignIn');
+
+    return user;
+  } catch (error) {
+    console.error('Error completing sign-in:', error);
+    const message = error instanceof Error ? error.message : 'Failed to complete sign-in';
+    throw new Error(message);
+  }
+}
+
+/**
+ * Get the saved email for sign-in (from localStorage)
+ */
+export function getSavedEmailForSignIn(): string | null {
+  if (typeof window === 'undefined') return null;
+  return window.localStorage.getItem('emailForSignIn');
 }
