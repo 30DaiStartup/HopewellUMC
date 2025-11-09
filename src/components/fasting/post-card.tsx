@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Heart, MessageCircle, Trash2, Send } from 'lucide-react';
 import { Post } from '@/lib/fasting-types';
 import { useFasting } from '@/contexts/fasting-context';
@@ -59,8 +60,18 @@ export function PostCard({ post }: PostCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
-            {post.userName.charAt(0).toUpperCase()}
+          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold overflow-hidden">
+            {post.userAvatar ? (
+              <Image
+                src={post.userAvatar}
+                alt={post.userName}
+                width={40}
+                height={40}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span>{post.userName.charAt(0).toUpperCase()}</span>
+            )}
           </div>
 
           {/* User info */}
@@ -138,8 +149,18 @@ export function PostCard({ post }: PostCardProps) {
           {post.comments.map((comment) => (
             <div key={comment.id} className="flex gap-3">
               {/* Comment Avatar */}
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-semibold text-sm shrink-0">
-                {comment.userName.charAt(0).toUpperCase()}
+              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-semibold text-sm shrink-0 overflow-hidden">
+                {comment.userAvatar ? (
+                  <Image
+                    src={comment.userAvatar}
+                    alt={comment.userName}
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span>{comment.userName.charAt(0).toUpperCase()}</span>
+                )}
               </div>
 
               {/* Comment Content */}
