@@ -46,7 +46,26 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 2. Click "Get started"
 3. Enable the following sign-in methods:
    - **Email/Password**: Click "Email/Password", toggle "Enable", click "Save"
+   - **Email link (passwordless sign-in)**:
+     - Click "Email/Password" in the sign-in methods list
+     - Toggle "Email link (passwordless sign-in)" to **Enable**
+     - Click "Save"
    - **Google**: Click "Google", toggle "Enable", add a support email, click "Save"
+
+### Configuring Passwordless Sign-In
+
+The application supports passwordless authentication via email links (magic links). When enabled, users can:
+- Click "Use magic link" in the sign-in modal
+- Enter their email address
+- Receive a sign-in link via email
+- Click the link to automatically sign in without a password
+
+**Important Notes:**
+- The email link redirects to `/auth/complete-signin` in your application
+- Make sure to add your domain to the authorized domains list in Firebase Console:
+  - Go to **Authentication** > **Settings** > **Authorized domains**
+  - Add your production domain (e.g., `yourdomain.com`)
+  - `localhost` is already authorized for development
 
 ## Step 5: Set Up Firestore Database
 

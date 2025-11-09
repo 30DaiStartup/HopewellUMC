@@ -8,6 +8,7 @@ import {
   signInWithGoogle,
   signOutUser,
   onAuthStateChange,
+  sendPasswordlessSignInLink,
 } from '@/lib/auth-service';
 import {
   getAllPosts,
@@ -35,6 +36,7 @@ interface FastingContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
+  sendPasswordlessLink: (email: string) => Promise<boolean>;
   signup: (email: string, password: string, displayName: string) => Promise<boolean>;
   logout: () => Promise<void>;
   joinFast: () => Promise<void>;
@@ -158,6 +160,16 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
       return true;
     } catch (error) {
       console.error('Google login error:', error);
+      return false;
+    }
+  };
+
+  const sendPasswordlessLink = async (email: string): Promise<boolean> => {
+    try {
+      await sendPasswordlessSignInLink(email);
+      return true;
+    } catch (error) {
+      console.error('Send passwordless link error:', error);
       return false;
     }
   };
@@ -327,6 +339,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         loading,
         login,
         loginWithGoogle,
+        sendPasswordlessLink,
         signup,
         logout,
         joinFast,
