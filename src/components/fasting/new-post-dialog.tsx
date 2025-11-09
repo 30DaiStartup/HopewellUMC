@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from 'react';
-import { Plus, Image as ImageIcon, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Image as ImageIcon, X, Link as LinkIcon } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { detectUrl, fetchLinkPreview } from '@/lib/utils';
+import type { LinkPreview } from '@/lib/fasting-types';
 
 export function NewPostDialog() {
   const { currentUser, addPost } = useFasting();
@@ -12,6 +14,26 @@ export function NewPostDialog() {
   const [content, setContent] = useState('');
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
   const [mediaType, setMediaType] = useState<'image' | 'video' | null>(null);
+  const [linkPreview, setLinkPreview] = useState<LinkPreview | null>(null);
+  const [isLoadingPreview, setIsLoadingPreview] = useState(false);
+
+  // Detect URLs and fetch link previews
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      const url = detectUrl(content);
+
+      if (url && url !== linkPreview?.url) {
+        setIsLoadingPreview(true);
+        const preview = await fetchLinkPreview(url);
+        setLinkPreview(preview);
+        setIsLoadingPreview(false);
+      } else if (!url && linkPreview) {
+        setLinkPreview(null);
+      }
+    }, 500); // Debounce for 500ms
+
+    return () => clearTimeout(timeoutId);
+  }, [content]);
 
   const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,18 +69,23 @@ export function NewPostDialog() {
       return;
     }
 
-    addPost(content, mediaPreview || undefined, mediaType || undefined);
+    addPost(content, mediaPreview || undefined, mediaType || undefined, linkPreview || undefined);
 
     // Reset form
     setContent('');
     setMediaPreview(null);
     setMediaType(null);
+    setLinkPreview(null);
     setOpen(false);
   };
 
   const handleRemoveMedia = () => {
     setMediaPreview(null);
     setMediaType(null);
+  };
+
+  const handleRemoveLinkPreview = () => {
+    setLinkPreview(null);
   };
 
   if (!currentUser?.isFasting) {
@@ -129,6 +156,67 @@ export function NewPostDialog() {
                   className="w-full h-auto max-h-[300px]"
                 />
               )}
+            </div>
+          )}
+
+          {/* Link Preview */}
+          {isLoadingPreview && (
+            <div className="rounded-lg border border-gray-200 p-4 bg-gray-50">
+              <div className="flex items-center gap-2 text-gray-500">
+                <LinkIcon className="h-4 w-4 animate-pulse" />
+                <span className="text-sm">Loading link preview...</span>
+              </div>
+            </div>
+          )}
+
+          {linkPreview && !isLoadingPreview && (
+            <div className="relative rounded-lg border border-gray-200 overflow-hidden bg-white hover:bg-gray-50 transition-colors">
+              <button
+                onClick={handleRemoveLinkPreview}
+                className="absolute top-2 right-2 p-1 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors z-10"
+              >
+                <X className="h-4 w-4 text-gray-600" />
+              </button>
+
+              <a
+                href={linkPreview.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-4"
+              >
+                {linkPreview.image && (
+                  <img
+                    src={linkPreview.image}
+                    alt={linkPreview.title || 'Link preview'}
+                    className="w-full h-48 object-cover rounded-md mb-3"
+                  />
+                )}
+
+                <div className="space-y-1">
+                  {linkPreview.siteName && (
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">
+                      {linkPreview.siteName}
+                    </p>
+                  )}
+
+                  {linkPreview.title && (
+                    <h3 className="font-semibold text-gray-900 line-clamp-2">
+                      {linkPreview.title}
+                    </h3>
+                  )}
+
+                  {linkPreview.description && (
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {linkPreview.description}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-1 text-xs text-gray-400 mt-2">
+                    <LinkIcon className="h-3 w-3" />
+                    <span className="truncate">{new URL(linkPreview.url).hostname}</span>
+                  </div>
+                </div>
+              </a>
             </div>
           )}
 

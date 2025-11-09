@@ -28,6 +28,14 @@ export interface JournalEntry {
   sharedToFeed: boolean;
 }
 
+export interface LinkPreview {
+  url: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  siteName?: string;
+}
+
 export interface Post {
   id: string;
   userId: string;
@@ -36,6 +44,7 @@ export interface Post {
   content: string;
   mediaUrl?: string;
   mediaType?: 'image' | 'video';
+  linkPreview?: LinkPreview;
   createdAt: Date;
   likes: string[]; // array of user IDs
   comments: Comment[];

@@ -153,6 +153,11 @@ export async function createPost(postData: Omit<Post, 'id' | 'createdAt'>): Prom
     data.mediaType = postData.mediaType;
   }
 
+  // Only add linkPreview if it is defined
+  if (postData.linkPreview !== undefined) {
+    data.linkPreview = postData.linkPreview;
+  }
+
   const docRef = await addDoc(collection(db!,POSTS_COLLECTION), data);
   return docRef.id;
 }

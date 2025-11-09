@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, Post, Comment, JournalEntry, FastingSession } from '@/lib/fasting-types';
+import { User, Post, Comment, JournalEntry, FastingSession, LinkPreview } from '@/lib/fasting-types';
 import {
   signUpWithEmail,
   signInWithEmail,
@@ -45,7 +45,7 @@ interface FastingContextType {
 
   // Posts & Social
   posts: Post[];
-  addPost: (content: string, mediaUrl?: string, mediaType?: 'image' | 'video') => Promise<void>;
+  addPost: (content: string, mediaUrl?: string, mediaType?: 'image' | 'video', linkPreview?: LinkPreview) => Promise<void>;
   likePost: (postId: string) => Promise<void>;
   addComment: (postId: string, content: string) => Promise<void>;
   likeComment: (postId: string, commentId: string) => Promise<void>;
@@ -210,7 +210,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Post functions
-  const addPost = async (content: string, mediaUrl?: string, mediaType?: 'image' | 'video'): Promise<void> => {
+  const addPost = async (content: string, mediaUrl?: string, mediaType?: 'image' | 'video', linkPreview?: LinkPreview): Promise<void> => {
     if (!currentUser) return;
 
     try {
@@ -221,6 +221,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         content,
         mediaUrl,
         mediaType,
+        linkPreview,
         likes: [],
         comments: [],
       });
