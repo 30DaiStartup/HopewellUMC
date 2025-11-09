@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, Post, Comment, JournalEntry, FastingSession, LinkPreview } from '@/lib/fasting-types';
+import { User, Post, Comment, JournalEntry, FastingSession, LinkPreview, WeightEntry, WeightGoal } from '@/lib/fasting-types';
 import {
   signUpWithEmail,
   signInWithEmail,
@@ -30,6 +30,15 @@ import {
   subscribeToUserJournal,
   createJournalEntry,
   deleteJournalEntry as firestoreDeleteJournalEntry,
+  createWeightEntry,
+  getUserWeightEntries,
+  subscribeToUserWeightEntries,
+  deleteWeightEntry as firestoreDeleteWeightEntry,
+  createWeightGoal,
+  getUserWeightGoal,
+  subscribeToUserWeightGoal,
+  updateWeightGoal as firestoreUpdateWeightGoal,
+  deleteWeightGoal as firestoreDeleteWeightGoal,
 } from '@/lib/firestore-service';
 
 interface FastingContextType {
@@ -65,6 +74,15 @@ interface FastingContextType {
   journalEntries: JournalEntry[];
   addJournalEntry: (content: string, mood?: JournalEntry['mood'], shareToFeed?: boolean) => Promise<void>;
   deleteJournalEntry: (entryId: string) => Promise<void>;
+
+  // Weight Tracking
+  weightEntries: WeightEntry[];
+  weightGoal: WeightGoal | null;
+  addWeightEntry: (weight: number, unit: 'lbs' | 'kg', notes?: string) => Promise<void>;
+  deleteWeightEntry: (entryId: string) => Promise<void>;
+  setWeightGoal: (targetWeight: number, unit: 'lbs' | 'kg', targetDate?: Date) => Promise<void>;
+  updateWeightGoal: (goalId: string, updates: Partial<WeightGoal>) => Promise<void>;
+  deleteWeightGoal: (goalId: string) => Promise<void>;
 }
 
 const FastingContext = createContext<FastingContextType | undefined>(undefined);
@@ -76,6 +94,8 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
   const [participants, setParticipants] = useState<User[]>([]);
   const [fastingSessions, setFastingSessions] = useState<FastingSession[]>([]);
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
+  const [weightEntries, setWeightEntries] = useState<WeightEntry[]>([]);
+  const [weightGoal, setWeightGoalState] = useState<WeightGoal | null>(null);
 
   // Listen for authentication state changes
   useEffect(() => {
@@ -140,6 +160,34 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
 
     const unsubscribe = subscribeToUserJournal(currentUser.id, (entries) => {
       setJournalEntries(entries);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  // Subscribe to user's weight entries when user changes
+  useEffect(() => {
+    if (!currentUser) {
+      setWeightEntries([]);
+      return;
+    }
+
+    const unsubscribe = subscribeToUserWeightEntries(currentUser.id, (entries) => {
+      setWeightEntries(entries);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  // Subscribe to user's weight goal when user changes
+  useEffect(() => {
+    if (!currentUser) {
+      setWeightGoalState(null);
+      return;
+    }
+
+    const unsubscribe = subscribeToUserWeightGoal(currentUser.id, (goal) => {
+      setWeightGoalState(goal);
     });
 
     return () => unsubscribe();
@@ -357,6 +405,73 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Weight tracking functions
+  const addWeightEntry = async (weight: number, unit: 'lbs' | 'kg', notes?: string): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await createWeightEntry({
+        userId: currentUser.id,
+        weight,
+        unit,
+        notes,
+      });
+    } catch (error) {
+      console.error('Add weight entry error:', error);
+    }
+  };
+
+  const deleteWeightEntry = async (entryId: string): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await firestoreDeleteWeightEntry(entryId);
+    } catch (error) {
+      console.error('Delete weight entry error:', error);
+    }
+  };
+
+  const setWeightGoal = async (targetWeight: number, unit: 'lbs' | 'kg', targetDate?: Date): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      // Delete existing goal if any
+      if (weightGoal) {
+        await firestoreDeleteWeightGoal(weightGoal.id);
+      }
+
+      // Create new goal
+      await createWeightGoal({
+        userId: currentUser.id,
+        targetWeight,
+        unit,
+        targetDate,
+      });
+    } catch (error) {
+      console.error('Set weight goal error:', error);
+    }
+  };
+
+  const updateWeightGoal = async (goalId: string, updates: Partial<WeightGoal>): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await firestoreUpdateWeightGoal(goalId, updates);
+    } catch (error) {
+      console.error('Update weight goal error:', error);
+    }
+  };
+
+  const deleteWeightGoal = async (goalId: string): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await firestoreDeleteWeightGoal(goalId);
+    } catch (error) {
+      console.error('Delete weight goal error:', error);
+    }
+  };
+
   return (
     <FastingContext.Provider
       value={{
@@ -383,6 +498,13 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         journalEntries,
         addJournalEntry,
         deleteJournalEntry,
+        weightEntries,
+        weightGoal,
+        addWeightEntry,
+        deleteWeightEntry,
+        setWeightGoal,
+        updateWeightGoal,
+        deleteWeightGoal,
       }}
     >
       {children}

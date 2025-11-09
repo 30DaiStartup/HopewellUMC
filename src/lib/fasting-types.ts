@@ -80,3 +80,21 @@ export interface FastingEvent {
   name: string;
   description: string;
 }
+
+export interface WeightEntry {
+  id: string;
+  userId: string;
+  weight: number; // in pounds or kg
+  unit: 'lbs' | 'kg';
+  notes?: string;
+  createdAt: Date;
+}
+
+export interface WeightGoal {
+  id: string;
+  userId: string;
+  targetWeight: number;
+  unit: 'lbs' | 'kg';
+  targetDate?: Date;
+  createdAt: Date;
+}

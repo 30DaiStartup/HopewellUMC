@@ -6,6 +6,7 @@ import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
+import { WeightTracker } from './weight-tracker';
 
 export function FastingTracker() {
   const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries, deleteJournalEntry } = useFasting();
@@ -538,6 +539,9 @@ export function FastingTracker() {
           </div>
         )}
       </div>
+
+      {/* Weight Tracking Section */}
+      <WeightTracker />
     </div>
   );
 }
