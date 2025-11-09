@@ -8,7 +8,7 @@ import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting
 import { FastingSession } from '@/lib/fasting-types';
 
 export function FastingTracker() {
-  const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries } = useFasting();
+  const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries, deleteJournalEntry } = useFasting();
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [journalContent, setJournalContent] = useState('');
   const [selectedMood, setSelectedMood] = useState<'joyful' | 'peaceful' | 'struggling' | 'hopeful' | undefined>();
@@ -509,14 +509,27 @@ export function FastingTracker() {
               {userEntries.slice().reverse().map((entry) => (
                 <div key={entry.id} className="bg-gray-50 p-3 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
-                    {entry.mood && (
-                      <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
-                        {entry.mood}
+                    <div className="flex items-center gap-2">
+                      {entry.mood && (
+                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                          {entry.mood}
+                        </span>
+                      )}
+                      <span className="text-xs text-gray-500">
+                        {new Date(entry.createdAt).toLocaleDateString()}
                       </span>
-                    )}
-                    <span className="text-xs text-gray-500">
-                      {new Date(entry.createdAt).toLocaleDateString()}
-                    </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        if (window.confirm('Are you sure you want to delete this journal entry?')) {
+                          deleteJournalEntry(entry.id);
+                        }
+                      }}
+                      className="text-red-500 hover:text-red-700 transition-colors"
+                      title="Delete entry"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </div>
                   <p className="text-sm text-gray-700">{entry.content}</p>
                 </div>

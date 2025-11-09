@@ -29,6 +29,7 @@ import {
   getUserJournalEntries,
   subscribeToUserJournal,
   createJournalEntry,
+  deleteJournalEntry as firestoreDeleteJournalEntry,
 } from '@/lib/firestore-service';
 
 interface FastingContextType {
@@ -63,6 +64,7 @@ interface FastingContextType {
   // Journal
   journalEntries: JournalEntry[];
   addJournalEntry: (content: string, mood?: JournalEntry['mood'], shareToFeed?: boolean) => Promise<void>;
+  deleteJournalEntry: (entryId: string) => Promise<void>;
 }
 
 const FastingContext = createContext<FastingContextType | undefined>(undefined);
@@ -344,6 +346,16 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const deleteJournalEntry = async (entryId: string): Promise<void> => {
+    if (!currentUser) return;
+
+    try {
+      await firestoreDeleteJournalEntry(entryId);
+    } catch (error) {
+      console.error('Delete journal entry error:', error);
+    }
+  };
+
   return (
     <FastingContext.Provider
       value={{
@@ -369,6 +381,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         deleteFastingSession,
         journalEntries,
         addJournalEntry,
+        deleteJournalEntry,
       }}
     >
       {children}
