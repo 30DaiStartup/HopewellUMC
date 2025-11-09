@@ -96,12 +96,16 @@ export function PostCard({ post }: PostCardProps) {
 
       {/* Content */}
       <div className="mb-4">
-        <p className="text-gray-800 whitespace-pre-wrap">{post.content}</p>
+        {/* Render rich text HTML content */}
+        <div
+          className="prose prose-sm max-w-none text-gray-800"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
         {/* Media */}
         {post.mediaUrl && (
           <div className="mt-4 rounded-lg overflow-hidden">
-            {post.mediaType === 'image' ? (
+            {post.mediaType === 'image' || post.mediaType === 'gif' ? (
               <img
                 src={post.mediaUrl}
                 alt="Post media"
