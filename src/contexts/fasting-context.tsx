@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { User, Post, Comment, JournalEntry, FastingSession } from '@/lib/fasting-types';
 
 interface FastingContextType {
@@ -61,21 +62,53 @@ const MOCK_POSTS: Post[] = [
 ];
 
 export function FastingProvider({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
   const [participants, setParticipants] = useState<User[]>(MOCK_USERS);
   const [fastingSessions, setFastingSessions] = useState<FastingSession[]>([]);
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
 
+  // Sync NextAuth session with currentUser state
+  useEffect(() => {
+    if (session?.user) {
+      const user: User = {
+        id: (session.user as Record<string, unknown>).id as string || session.user.email || 'unknown',
+        email: session.user.email || '',
+        displayName: session.user.name || 'Unknown User',
+        avatar: session.user.image || undefined,
+        joinedAt: new Date(),
+        isFasting: false,
+      };
+
+      // Load user data from localStorage if exists
+      const storedUser = localStorage.getItem(`fasting_user_${user.id}`);
+      if (storedUser) {
+        const savedUser = JSON.parse(storedUser);
+        setCurrentUser({ ...user, ...savedUser, avatar: user.avatar }); // Keep fresh avatar from session
+      } else {
+        setCurrentUser(user);
+        // Add to participants on first login
+        setParticipants(prev => {
+          const exists = prev.find(p => p.id === user.id);
+          if (!exists) {
+            return [...prev, user];
+          }
+          return prev;
+        });
+      }
+    } else if (status !== 'loading') {
+      setCurrentUser(null);
+    }
+  }, [session, status]);
+
   // Load data from localStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('fasting_user');
     const storedPosts = localStorage.getItem('fasting_posts');
     const storedParticipants = localStorage.getItem('fasting_participants');
     const storedSessions = localStorage.getItem('fasting_sessions');
     const storedJournal = localStorage.getItem('fasting_journal');
 
-    if (storedUser) setCurrentUser(JSON.parse(storedUser));
     if (storedPosts) setPosts(JSON.parse(storedPosts));
     if (storedParticipants) setParticipants(JSON.parse(storedParticipants));
     if (storedSessions) setFastingSessions(JSON.parse(storedSessions));
@@ -85,7 +118,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
   // Save to localStorage whenever data changes
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem('fasting_user', JSON.stringify(currentUser));
+      localStorage.setItem(`fasting_user_${currentUser.id}`, JSON.stringify(currentUser));
     }
   }, [currentUser]);
 
@@ -120,16 +153,13 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithGoogle = async (): Promise<boolean> => {
-    // Mock Google login
-    const user: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      email: 'user@gmail.com',
-      displayName: 'Google User',
-      joinedAt: new Date(),
-      isFasting: false,
-    };
-    setCurrentUser(user);
-    return true;
+    try {
+      const result = await signIn('google', { redirect: false });
+      return result?.ok ?? false;
+    } catch (error) {
+      console.error('Google login error:', error);
+      return false;
+    }
   };
 
   const signup = async (email: string, password: string, displayName: string): Promise<boolean> => {
@@ -147,9 +177,12 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     return true;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    if (currentUser) {
+      localStorage.removeItem(`fasting_user_${currentUser.id}`);
+    }
     setCurrentUser(null);
-    localStorage.removeItem('fasting_user');
+    await signOut({ redirect: false });
   };
 
   const joinFast = () => {

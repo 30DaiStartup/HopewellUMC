@@ -1,6 +1,7 @@
 "use client";
 
 import { User as UserIcon } from 'lucide-react';
+import Image from 'next/image';
 import { useFasting } from '@/contexts/fasting-context';
 
 export function ParticipantList() {
@@ -33,8 +34,18 @@ export function ParticipantList() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
           >
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold shrink-0">
-              {participant.displayName.charAt(0).toUpperCase()}
+            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold shrink-0 overflow-hidden">
+              {participant.avatar ? (
+                <Image
+                  src={participant.avatar}
+                  alt={participant.displayName}
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>{participant.displayName.charAt(0).toUpperCase()}</span>
+              )}
             </div>
 
             {/* Info */}
