@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Heart, MessageCircle, Trash2, Send } from 'lucide-react';
+import { Heart, MessageCircle, Trash2, Send, Link as LinkIcon } from 'lucide-react';
 import { Post } from '@/lib/fasting-types';
 import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
@@ -115,6 +115,49 @@ export function PostCard({ post }: PostCardProps) {
               />
             )}
           </div>
+        )}
+
+        {/* Link Preview */}
+        {post.linkPreview && (
+          <a
+            href={post.linkPreview.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block mt-4 rounded-lg border border-gray-200 overflow-hidden bg-white hover:bg-gray-50 transition-colors"
+          >
+            {post.linkPreview.image && (
+              <img
+                src={post.linkPreview.image}
+                alt={post.linkPreview.title || 'Link preview'}
+                className="w-full h-64 object-cover"
+              />
+            )}
+
+            <div className="p-4 space-y-1">
+              {post.linkPreview.siteName && (
+                <p className="text-xs text-gray-500 uppercase tracking-wide">
+                  {post.linkPreview.siteName}
+                </p>
+              )}
+
+              {post.linkPreview.title && (
+                <h3 className="font-semibold text-gray-900 line-clamp-2">
+                  {post.linkPreview.title}
+                </h3>
+              )}
+
+              {post.linkPreview.description && (
+                <p className="text-sm text-gray-600 line-clamp-2">
+                  {post.linkPreview.description}
+                </p>
+              )}
+
+              <div className="flex items-center gap-1 text-xs text-gray-400 pt-1">
+                <LinkIcon className="h-3 w-3" />
+                <span className="truncate">{new URL(post.linkPreview.url).hostname}</span>
+              </div>
+            </div>
+          </a>
         )}
       </div>
 
