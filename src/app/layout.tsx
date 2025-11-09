@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientBody from "./ClientBody";
-import AuthSessionProvider from "@/components/session-provider";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -23,9 +22,7 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="antialiased">
-        <AuthSessionProvider>
-          <ClientBody>{children}</ClientBody>
-        </AuthSessionProvider>
+        <ClientBody>{children}</ClientBody>
       </body>
     </html>
   );
