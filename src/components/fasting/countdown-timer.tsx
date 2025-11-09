@@ -31,16 +31,16 @@ export function CountdownTimer() {
       // Determine status
       if (now < startTime) {
         setStatus('before');
-        const difference = startTime - now;
-        return calculateTimeParts(difference);
       } else if (now >= startTime && now < endTime) {
         setStatus('during');
-        const difference = endTime - now;
-        return calculateTimeParts(difference);
       } else {
         setStatus('after');
         return { days: 0, hours: 0, minutes: 0, seconds: 0, total: 0 };
       }
+
+      // Always count down to the end time (unless after)
+      const difference = endTime - now;
+      return calculateTimeParts(difference);
     };
 
     const calculateTimeParts = (difference: number): TimeRemaining => {
@@ -79,7 +79,7 @@ export function CountdownTimer() {
   return (
     <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-8 text-center text-white shadow-xl">
       <h2 className="text-xl md:text-2xl font-semibold mb-2 text-indigo-100">
-        {status === 'before' ? 'Fast Begins In' : 'Time Until Renewal'}
+        Countdown to Sunday, November 16 at Noon EST
       </h2>
 
       <div className="grid grid-cols-4 gap-4 mt-6">
