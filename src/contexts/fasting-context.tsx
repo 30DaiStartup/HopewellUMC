@@ -13,6 +13,7 @@ import {
 import {
   getAllPosts,
   subscribeToPosts,
+  subscribeToTopPosts,
   createPost,
   likePost as firestoreLikePost,
   addComment as firestoreAddComment,
@@ -107,26 +108,29 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  // Subscribe to posts when user is authenticated
+  // Subscribe to posts - top 5 for unauthenticated users, all for authenticated users
   useEffect(() => {
-    // Only subscribe if user is authenticated and loading is complete
-    if (!currentUser || loading) {
-      setPosts([]);
+    // Wait until loading is complete
+    if (loading) {
       return;
     }
 
-    const unsubscribe = subscribeToPosts((newPosts) => {
-      setPosts(newPosts);
-    });
+    // Subscribe to top 5 posts for unauthenticated users, all posts for authenticated users
+    const unsubscribe = currentUser
+      ? subscribeToPosts((newPosts) => {
+          setPosts(newPosts);
+        })
+      : subscribeToTopPosts((newPosts) => {
+          setPosts(newPosts);
+        });
 
     return () => unsubscribe();
   }, [currentUser, loading]);
 
-  // Subscribe to participants when user is authenticated
+  // Subscribe to participants - available for all users (authenticated and unauthenticated)
   useEffect(() => {
-    // Only subscribe if user is authenticated and loading is complete
-    if (!currentUser || loading) {
-      setParticipants([]);
+    // Wait until loading is complete
+    if (loading) {
       return;
     }
 
@@ -135,7 +139,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => unsubscribe();
-  }, [currentUser, loading]);
+  }, [loading]);
 
   // Subscribe to user's fasting sessions when user changes
   useEffect(() => {
