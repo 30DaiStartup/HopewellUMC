@@ -6,8 +6,11 @@ import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
 import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
-import { WeightTracker } from './weight-tracker';
+// import { WeightTracker } from './weight-tracker';
 import { FastingZonesTimeline } from '@/components/fasting/fasting-zones-timeline';
+
+// Feature flag for weight tracking - set to true to re-enable
+const ENABLE_WEIGHT_TRACKING = false;
 
 export function FastingTracker() {
   const { currentUser, currentSession, fastingSessions, startFasting, endFasting, deleteFastingSession, addJournalEntry, journalEntries, deleteJournalEntry } = useFasting();
@@ -547,8 +550,8 @@ export function FastingTracker() {
         )}
       </div>
 
-      {/* Weight Tracking Section */}
-      <WeightTracker />
+      {/* Weight Tracking Section - Temporarily disabled, can be re-enabled by setting ENABLE_WEIGHT_TRACKING to true */}
+      {/* {ENABLE_WEIGHT_TRACKING && <WeightTracker />} */}
     </div>
   );
 }
