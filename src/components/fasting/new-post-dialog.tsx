@@ -156,10 +156,10 @@ export function NewPostDialog() {
     return (
       <Button
         disabled
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-gray-300 cursor-not-allowed z-50"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg bg-gray-300 cursor-not-allowed z-50"
         title="Join the fast to create posts"
       >
-        <Plus className="h-6 w-6" />
+        <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
       </Button>
     );
   }
@@ -168,14 +168,14 @@ export function NewPostDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-indigo-600 hover:bg-indigo-700 z-50"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg bg-indigo-600 hover:bg-indigo-700 z-50"
           title="Create a new post"
         >
-          <Plus className="h-6 w-6" />
+          <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>Share Your Journey</DialogTitle>
         </DialogHeader>
@@ -225,7 +225,7 @@ export function NewPostDialog() {
             <div className="relative rounded-lg overflow-hidden bg-gray-100">
               <button
                 onClick={handleRemoveMedia}
-                className="absolute top-2 right-2 p-1 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors z-10"
+                className="absolute top-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors z-10 min-w-[32px] min-h-[32px] flex items-center justify-center"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -234,13 +234,13 @@ export function NewPostDialog() {
                 <img
                   src={mediaPreview}
                   alt="Upload preview"
-                  className="w-full h-auto max-h-[300px] object-contain"
+                  className="w-full h-auto max-h-[200px] sm:max-h-[300px] object-contain"
                 />
               ) : (
                 <video
                   src={mediaPreview}
                   controls
-                  className="w-full h-auto max-h-[300px]"
+                  className="w-full h-auto max-h-[200px] sm:max-h-[300px]"
                 />
               )}
             </div>
@@ -260,7 +260,7 @@ export function NewPostDialog() {
             <div className="relative rounded-lg border border-gray-200 overflow-hidden bg-white hover:bg-gray-50 transition-colors">
               <button
                 onClick={handleRemoveLinkPreview}
-                className="absolute top-2 right-2 p-1 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors z-10"
+                className="absolute top-2 right-2 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors z-10 min-w-[32px] min-h-[32px] flex items-center justify-center"
               >
                 <X className="h-4 w-4 text-gray-600" />
               </button>
@@ -269,13 +269,13 @@ export function NewPostDialog() {
                 href={linkPreview.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-4"
+                className="block p-3 sm:p-4"
               >
                 {linkPreview.image && (
                   <img
                     src={linkPreview.image}
                     alt={linkPreview.title || 'Link preview'}
-                    className="w-full h-48 object-cover rounded-md mb-3"
+                    className="w-full h-32 sm:h-48 object-cover rounded-md mb-3"
                   />
                 )}
 
@@ -308,17 +308,15 @@ export function NewPostDialog() {
           )}
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            <div className="flex items-center gap-4">
-              <p className="text-xs text-gray-500">
-                Drag and drop media, or use the toolbar buttons
-              </p>
-            </div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:justify-between pt-4 border-t border-gray-200">
+            <p className="text-xs text-gray-500 hidden sm:block">
+              Drag and drop media, or use the toolbar buttons
+            </p>
 
             <Button
               onClick={handleSubmit}
               disabled={(!content.replace(/<[^>]*>/g, '').trim() && !mediaPreview) || isProcessing}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-indigo-600 hover:bg-indigo-700 w-full sm:w-auto"
             >
               Post
             </Button>
