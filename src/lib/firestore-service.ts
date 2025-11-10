@@ -229,6 +229,42 @@ export function subscribeToPosts(callback: (posts: Post[]) => void) {
   });
 }
 
+// Real-time listener for top 5 posts (for unauthenticated users)
+export function subscribeToTopPosts(callback: (posts: Post[]) => void) {
+  if (!isConfigured || !db) {
+    callback([]);
+    return () => {};
+  }
+
+  const q = query(
+    collection(db!,POSTS_COLLECTION),
+    orderBy('createdAt', 'desc'),
+    limit(5)
+  );
+
+  return onSnapshot(q, (snapshot) => {
+    const posts = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        userId: data.userId,
+        userName: data.userName,
+        userAvatar: data.userAvatar,
+        content: data.content,
+        mediaUrl: data.mediaUrl,
+        mediaType: data.mediaType,
+        createdAt: data.createdAt?.toDate() || new Date(),
+        likes: data.likes || [],
+        comments: (data.comments || []).map((comment: { createdAt?: { toDate?: () => Date }; [key: string]: unknown }) => ({
+          ...comment,
+          createdAt: comment.createdAt?.toDate ? comment.createdAt.toDate() : new Date(comment.createdAt as string | number | Date),
+        })),
+      };
+    });
+    callback(posts);
+  });
+}
+
 export async function likePost(postId: string, userId: string): Promise<void> {
   ensureConfigured();
   const postRef = doc(db!,POSTS_COLLECTION, postId);
