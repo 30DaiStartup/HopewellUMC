@@ -151,7 +151,7 @@ function FastingAppContent() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
-              <ParticipantList />
+              {activeTab === 'feed' && <ParticipantList />}
 
               {/* Info Card */}
               {!currentUser && (
