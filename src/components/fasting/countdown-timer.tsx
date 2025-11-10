@@ -67,9 +67,9 @@ export function CountdownTimer() {
 
   if (status === 'after') {
     return (
-      <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-8 text-center text-white shadow-xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-2">Fast Completed! 🙏</h2>
-        <p className="text-indigo-100 text-lg">
+      <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-6 sm:p-8 text-center text-white shadow-xl">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Fast Completed! 🙏</h2>
+        <p className="text-indigo-100 text-base sm:text-lg">
           Thank you for your dedication and participation
         </p>
       </div>
@@ -77,50 +77,50 @@ export function CountdownTimer() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-8 text-center text-white shadow-xl">
-      <h2 className="text-xl md:text-2xl font-semibold mb-2 text-indigo-100">
+    <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-4 sm:p-6 md:p-8 text-center text-white shadow-xl">
+      <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 text-indigo-100 leading-tight">
         Countdown to Sunday, November 16 at Noon EST
       </h2>
 
-      <div className="grid grid-cols-4 gap-4 mt-6">
+      <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-4 sm:mt-6">
         <div className="flex flex-col">
-          <div className="text-4xl md:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-3 backdrop-blur-sm">
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.days)}
           </div>
-          <div className="text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
             Days
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="text-4xl md:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-3 backdrop-blur-sm">
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.hours)}
           </div>
-          <div className="text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
             Hours
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="text-4xl md:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-3 backdrop-blur-sm">
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.minutes)}
           </div>
-          <div className="text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
             Mins
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="text-4xl md:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-3 backdrop-blur-sm">
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.seconds)}
           </div>
-          <div className="text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
             Secs
           </div>
         </div>
       </div>
 
-      <p className="mt-6 text-indigo-50 text-sm md:text-base">
+      <p className="mt-4 sm:mt-6 text-indigo-50 text-xs sm:text-sm md:text-base">
         {FASTING_EVENT.description}
       </p>
     </div>

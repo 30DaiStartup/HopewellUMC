@@ -158,21 +158,21 @@ export function FastingTracker() {
         </h3>
 
         {/* Timer Display */}
-        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-8 mb-6">
-          <div className="flex justify-center gap-4 mb-6">
+        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4 sm:p-8 mb-6">
+          <div className="flex justify-center gap-2 sm:gap-4 mb-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-indigo-600">{duration.hours}</div>
-              <div className="text-sm text-indigo-600 mt-1">Hours</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.hours}</div>
+              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Hours</div>
             </div>
-            <div className="text-4xl font-bold text-indigo-600">:</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">:</div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-indigo-600">{duration.minutes}</div>
-              <div className="text-sm text-indigo-600 mt-1">Minutes</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.minutes}</div>
+              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Minutes</div>
             </div>
-            <div className="text-4xl font-bold text-indigo-600">:</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">:</div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-indigo-600">{duration.seconds}</div>
-              <div className="text-sm text-indigo-600 mt-1">Seconds</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.seconds}</div>
+              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Seconds</div>
             </div>
           </div>
 
@@ -234,47 +234,47 @@ export function FastingTracker() {
           </h3>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Total Fasting Time */}
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 sm:p-4">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-4 w-4 text-blue-600" />
               <span className="text-xs text-blue-600 font-medium">Total Time</span>
             </div>
-            <div className="text-2xl font-bold text-blue-900">
+            <div className="text-xl sm:text-2xl font-bold text-blue-900">
               {formatDurationText(statistics.totalTime)}
             </div>
           </div>
 
           {/* Completed Sessions */}
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 sm:p-4">
             <div className="flex items-center gap-2 mb-2">
               <Target className="h-4 w-4 text-green-600" />
               <span className="text-xs text-green-600 font-medium">Sessions</span>
             </div>
-            <div className="text-2xl font-bold text-green-900">
+            <div className="text-xl sm:text-2xl font-bold text-green-900">
               {statistics.completedCount}
             </div>
           </div>
 
           {/* Longest Session */}
-          <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 sm:p-4">
             <div className="flex items-center gap-2 mb-2">
               <Award className="h-4 w-4 text-purple-600" />
               <span className="text-xs text-purple-600 font-medium">Longest</span>
             </div>
-            <div className="text-2xl font-bold text-purple-900">
+            <div className="text-xl sm:text-2xl font-bold text-purple-900">
               {formatDurationText(statistics.longestSession)}
             </div>
           </div>
 
           {/* Current Streak */}
-          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 sm:p-4">
             <div className="flex items-center gap-2 mb-2">
               <Flame className="h-4 w-4 text-orange-600" />
               <span className="text-xs text-orange-600 font-medium">Streak</span>
             </div>
-            <div className="text-2xl font-bold text-orange-900">
+            <div className="text-xl sm:text-2xl font-bold text-orange-900">
               {statistics.streak} {statistics.streak === 1 ? 'day' : 'days'}
             </div>
           </div>
@@ -300,64 +300,64 @@ export function FastingTracker() {
           Milestones
         </h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {/* First Fast */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.completedCount >= 1
               ? 'border-yellow-400 bg-yellow-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">🎯</div>
+            <div className="text-2xl sm:text-3xl mb-1">🎯</div>
             <div className="text-xs font-medium text-gray-700">First Fast</div>
           </div>
 
           {/* 24 Hours Total */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.totalTime >= 24 * 60 * 60 * 1000
               ? 'border-green-400 bg-green-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">⏰</div>
+            <div className="text-2xl sm:text-3xl mb-1">⏰</div>
             <div className="text-xs font-medium text-gray-700">24 Hours</div>
           </div>
 
           {/* 3 Day Streak */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.streak >= 3
               ? 'border-orange-400 bg-orange-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">🔥</div>
+            <div className="text-2xl sm:text-3xl mb-1">🔥</div>
             <div className="text-xs font-medium text-gray-700">3 Day Streak</div>
           </div>
 
           {/* 5 Day Streak */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.streak >= 5
               ? 'border-red-400 bg-red-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">💪</div>
+            <div className="text-2xl sm:text-3xl mb-1">💪</div>
             <div className="text-xs font-medium text-gray-700">5 Day Streak</div>
           </div>
 
           {/* 3 Sessions */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.completedCount >= 3
               ? 'border-blue-400 bg-blue-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">⭐</div>
+            <div className="text-2xl sm:text-3xl mb-1">⭐</div>
             <div className="text-xs font-medium text-gray-700">3 Sessions</div>
           </div>
 
           {/* 5 Sessions */}
-          <div className={`border-2 rounded-lg p-3 text-center transition-all ${
+          <div className={`border-2 rounded-lg p-3 sm:p-4 text-center transition-all ${
             statistics.completedCount >= 5
               ? 'border-purple-400 bg-purple-50'
               : 'border-gray-200 bg-gray-50 opacity-50'
           }`}>
-            <div className="text-2xl mb-1">🏆</div>
+            <div className="text-2xl sm:text-3xl mb-1">🏆</div>
             <div className="text-xs font-medium text-gray-700">5 Sessions</div>
           </div>
         </div>
@@ -381,18 +381,18 @@ export function FastingTracker() {
           </div>
 
           {showHistory && (
-            <div className="space-y-3 max-h-[400px] overflow-y-auto">
+            <div className="space-y-3 max-h-[60vh] sm:max-h-[400px] overflow-y-auto">
               {statistics.completedSessions.map((session, index) => (
                 <div
                   key={session.id}
-                  className="flex items-center justify-between bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between bg-gray-50 p-3 sm:p-4 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                    <div className="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center text-sm font-semibold">
                       {index + 1}
                     </div>
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                         {new Date(session.startTime).toLocaleDateString('en-US', {
                           weekday: 'short',
                           month: 'short',
@@ -400,7 +400,7 @@ export function FastingTracker() {
                           year: 'numeric',
                         })}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-500 truncate">
                         {new Date(session.startTime).toLocaleTimeString('en-US', {
                           hour: 'numeric',
                           minute: '2-digit',
@@ -414,9 +414,9 @@ export function FastingTracker() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                     <div className="text-right">
-                      <div className="text-lg font-semibold text-indigo-600">
+                      <div className="text-base sm:text-lg font-semibold text-indigo-600">
                         {formatDurationText(session.duration)}
                       </div>
                     </div>
@@ -426,7 +426,7 @@ export function FastingTracker() {
                           deleteFastingSession(session.id);
                         }
                       }}
-                      className="text-gray-400 hover:text-red-500 transition-colors p-1"
+                      className="text-gray-400 hover:text-red-500 transition-colors p-1 min-w-[32px] min-h-[32px] flex items-center justify-center"
                       title="Delete session"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -467,19 +467,19 @@ export function FastingTracker() {
         {/* Mood Selection */}
         <div className="mb-4">
           <label className="text-sm text-gray-600 mb-2 block">How are you feeling?</label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-3">
             {moods.map((mood) => (
               <button
                 key={mood.value}
                 onClick={() => setSelectedMood(mood.value)}
-                className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all ${
+                className={`flex flex-col items-center p-3 sm:p-4 rounded-lg border-2 transition-all min-h-[80px] sm:min-h-0 ${
                   selectedMood === mood.value
                     ? 'border-indigo-600 bg-indigo-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <mood.icon className={`h-6 w-6 ${mood.color}`} />
-                <span className="text-xs mt-1 text-gray-600">{mood.label}</span>
+                <mood.icon className={`h-6 w-6 sm:h-7 sm:w-7 ${mood.color}`} />
+                <span className="text-xs sm:text-sm mt-1 text-gray-600">{mood.label}</span>
               </button>
             ))}
           </div>
@@ -516,17 +516,17 @@ export function FastingTracker() {
         {userEntries.length > 0 && (
           <div className="mt-6">
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Recent Entries</h5>
-            <div className="space-y-3 max-h-[300px] overflow-y-auto">
+            <div className="space-y-3 max-h-[50vh] sm:max-h-[300px] overflow-y-auto">
               {userEntries.slice().reverse().map((entry) => (
                 <div key={entry.id} className="bg-gray-50 p-3 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between mb-2 gap-2">
+                    <div className="flex items-center gap-2 flex-wrap min-w-0 flex-1">
                       {entry.mood && (
-                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded whitespace-nowrap">
                           {entry.mood}
                         </span>
                       )}
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 whitespace-nowrap">
                         {new Date(entry.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -536,13 +536,13 @@ export function FastingTracker() {
                           deleteJournalEntry(entry.id);
                         }
                       }}
-                      className="text-red-500 hover:text-red-700 transition-colors"
+                      className="text-red-500 hover:text-red-700 transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center flex-shrink-0"
                       title="Delete entry"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
-                  <p className="text-sm text-gray-700">{entry.content}</p>
+                  <p className="text-sm text-gray-700 break-words">{entry.content}</p>
                 </div>
               ))}
             </div>
