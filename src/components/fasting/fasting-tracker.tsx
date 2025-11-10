@@ -15,7 +15,7 @@ export function FastingTracker() {
   const [journalContent, setJournalContent] = useState('');
   const [selectedMood, setSelectedMood] = useState<'joyful' | 'peaceful' | 'struggling' | 'hopeful' | undefined>();
   const [shareToFeed, setShareToFeed] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const [showHistory, setShowHistory] = useState(true);
   const [shareWithCommunity, setShareWithCommunity] = useState(true);
 
   const currentDay = getCurrentFastDay();
@@ -195,7 +195,7 @@ export function FastingTracker() {
                 <span>Share my progress with the community</span>
               </label>
               <Button
-                onClick={startFasting}
+                onClick={() => startFasting(shareWithCommunity)}
                 className="bg-green-600 hover:bg-green-700 gap-2"
                 size="lg"
               >
