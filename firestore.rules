@@ -1,0 +1,114 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Allow anyone to read user profiles (needed for participant list)
+      allow read: if true;
+
+      // Only authenticated users can create their own profile
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+
+      // Users can update their own profile
+      allow update: if isOwner(userId);
+
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+
+    // Posts collection
+    match /posts/{postId} {
+      // Allow anyone to read posts (needed for unauthenticated users to view top 5 posts)
+      allow read: if true;
+
+      // Only authenticated users can create posts
+      allow create: if isAuthenticated();
+
+      // Post owners and admins can update posts
+      allow update: if isAuthenticated() && (isOwner(resource.data.userId) || isAdmin());
+
+      // Post owners and admins can delete posts
+      allow delete: if isAuthenticated() && (isOwner(resource.data.userId) || isAdmin());
+    }
+
+    // Journal entries collection
+    match /journal_entries/{entryId} {
+      // Only the owner can read their journal entries
+      allow read: if isOwner(resource.data.userId);
+
+      // Only authenticated users can create journal entries
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+
+      // Only the owner can update their journal entries
+      allow update: if isOwner(resource.data.userId);
+
+      // Only the owner can delete their journal entries
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Fasting sessions collection
+    match /fasting_sessions/{sessionId} {
+      // Only the owner can read their fasting sessions
+      allow read: if isOwner(resource.data.userId);
+
+      // Only authenticated users can create fasting sessions
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+
+      // Only the owner can update their fasting sessions
+      allow update: if isOwner(resource.data.userId);
+
+      // Only the owner can delete their fasting sessions
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Weight entries collection
+    match /weight_entries/{entryId} {
+      // Only the owner can read their weight entries
+      allow read: if isOwner(resource.data.userId);
+
+      // Only authenticated users can create weight entries
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+
+      // Only the owner can update their weight entries
+      allow update: if isOwner(resource.data.userId);
+
+      // Only the owner can delete their weight entries
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Weight goals collection
+    match /weight_goals/{goalId} {
+      // Only the owner can read their weight goals
+      allow read: if isOwner(resource.data.userId);
+
+      // Only authenticated users can create weight goals
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+
+      // Only the owner can update their weight goals
+      allow update: if isOwner(resource.data.userId);
+
+      // Only the owner can delete their weight goals
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
