@@ -74,6 +74,13 @@ export interface FastingTip {
   day?: number; // optional day number for daily tips
 }
 
+export interface PrayerSuggestion {
+  id: string;
+  scriptureReference: string;
+  prayer: string;
+  day?: number; // optional day number for daily prayers
+}
+
 export interface FastingEvent {
   startDate: Date;
   endDate: Date;

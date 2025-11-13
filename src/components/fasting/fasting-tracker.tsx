@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Play, Square, BookOpen, Smile, Meh, Frown, Sparkles, TrendingUp, Clock, Award, Calendar, Target, Flame, Trash2 } from 'lucide-react';
 import { useFasting } from '@/contexts/fasting-context';
 import { Button } from '@/components/ui/button';
-import { getDailyTip, getDailyScripture, getCurrentFastDay } from '@/lib/fasting-data';
+import { getDailyTip, getDailyScripture, getDailyPrayerSuggestion, getCurrentFastDay } from '@/lib/fasting-data';
 import { FastingSession } from '@/lib/fasting-types';
 // import { WeightTracker } from './weight-tracker';
 import { FastingZonesTimeline } from '@/components/fasting/fasting-zones-timeline';
@@ -24,6 +24,7 @@ export function FastingTracker() {
   const currentDay = getCurrentFastDay();
   const dailyTip = getDailyTip(currentDay);
   const dailyScripture = getDailyScripture(currentDay);
+  const dailyPrayerSuggestion = getDailyPrayerSuggestion(currentDay);
 
   // Calculate statistics from all sessions
   const statistics = useMemo(() => {
@@ -457,6 +458,12 @@ export function FastingTracker() {
         <div className="bg-amber-50 border-l-4 border-amber-600 p-4 rounded">
           <p className="text-sm font-semibold text-amber-900 mb-2">{dailyTip.title}</p>
           <p className="text-gray-700">{dailyTip.content}</p>
+        </div>
+
+        <h4 className="font-semibold text-gray-900 mt-6 mb-4">Prayer Suggestion</h4>
+        <div className="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded">
+          <p className="text-sm font-semibold text-emerald-900 mb-2">Based on {dailyPrayerSuggestion.scriptureReference}</p>
+          <p className="text-gray-700">{dailyPrayerSuggestion.prayer}</p>
         </div>
       </div>
 
