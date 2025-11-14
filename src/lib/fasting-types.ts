@@ -48,6 +48,7 @@ export interface Post {
   createdAt: Date;
   likes: string[]; // array of user IDs
   comments: Comment[];
+  fastingDurationMs?: number; // Fasting duration at time of posting (in milliseconds)
 }
 
 export interface Comment {

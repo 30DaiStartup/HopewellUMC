@@ -266,6 +266,14 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
     if (!currentUser) return;
 
     try {
+      // Calculate fasting duration if user is actively fasting
+      let fastingDurationMs: number | undefined;
+      if (currentSession && currentSession.isActive) {
+        const start = new Date(currentSession.startTime).getTime();
+        const now = new Date().getTime();
+        fastingDurationMs = now - start;
+      }
+
       await createPost({
         userId: currentUser.id,
         userName: currentUser.displayName,
@@ -276,6 +284,7 @@ export function FastingProvider({ children }: { children: React.ReactNode }) {
         linkPreview,
         likes: [],
         comments: [],
+        fastingDurationMs,
       });
     } catch (error) {
       console.error('Add post error:', error);

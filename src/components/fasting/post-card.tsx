@@ -54,6 +54,12 @@ export function PostCard({ post }: PostCardProps) {
     return postDate.toLocaleDateString();
   };
 
+  const formatFastingDuration = (durationMs: number) => {
+    const hours = Math.floor(durationMs / 3600000);
+    const minutes = Math.floor((durationMs % 3600000) / 60000);
+    return `${hours}h ${minutes}m`;
+  };
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
       {/* Header */}
@@ -81,17 +87,29 @@ export function PostCard({ post }: PostCardProps) {
           </div>
         </div>
 
-        {/* Delete button */}
-        {canDelete && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDelete}
-            className="text-gray-400 hover:text-red-600"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {/* Fasting Duration Bubble */}
+          {post.fastingDurationMs && (
+            <div className="bg-indigo-50 border border-indigo-200 rounded-full px-3 py-1.5 flex items-center gap-1.5">
+              <span className="text-lg">🙏</span>
+              <span className="text-sm font-semibold text-indigo-700">
+                {formatFastingDuration(post.fastingDurationMs)}
+              </span>
+            </div>
+          )}
+
+          {/* Delete button */}
+          {canDelete && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleDelete}
+              className="text-gray-400 hover:text-red-600"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Content */}
