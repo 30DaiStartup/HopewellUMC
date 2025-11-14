@@ -160,6 +160,11 @@ export async function createPost(postData: Omit<Post, 'id' | 'createdAt'>): Prom
     data.linkPreview = postData.linkPreview;
   }
 
+  // Only add fastingDurationMs if it is defined
+  if (postData.fastingDurationMs !== undefined) {
+    data.fastingDurationMs = postData.fastingDurationMs;
+  }
+
   const docRef = await addDoc(collection(db!,POSTS_COLLECTION), data);
   return docRef.id;
 }
