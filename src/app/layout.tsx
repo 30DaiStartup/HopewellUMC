@@ -1,22 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "tippy.js/dist/tippy.css";
 import ClientBody from "./ClientBody";
-import Script from "next/script";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0b5a7f" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b5a7f" },
+  ],
+};
 
 export const metadata: Metadata = {
-  title: "Hopewell UMC",
-  description: "Welcome to Hopewell United Methodist Church",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
+  title: {
+    default: "Hopewell United Methodist Church | Simpsonville, SC",
+    template: "%s | Hopewell UMC",
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
+  description: "To Grow in the Lord and Show Him to the World. Join us for worship, ministries, and community at Hopewell United Methodist Church in Simpsonville, SC.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -25,12 +28,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
   },
 };
@@ -42,12 +40,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          crossOrigin="anonymous"
-          src="//unpkg.com/same-runtime/dist/index.global.js"
-        />
-      </head>
       <body suppressHydrationWarning className="antialiased">
         <ClientBody>{children}</ClientBody>
       </body>
