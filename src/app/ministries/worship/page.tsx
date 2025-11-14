@@ -228,16 +228,11 @@ export default function WorshipMinistryPage() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                  <h4 className="text-xl font-bold mb-2">Sunday Morning Worship</h4>
-                  <p className="text-white/90 text-lg mb-1">10:30 AM</p>
-                  <p className="text-white/80">Traditional & Contemporary Blended Service</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                  <h4 className="text-xl font-bold mb-2">Sunday School</h4>
-                  <p className="text-white/90 text-lg mb-1">9:15 AM</p>
-                  <p className="text-white/80">All Ages Welcome</p>
+              <div className="max-w-md mx-auto">
+                <div className="bg-white/10 backdrop-blur rounded-lg p-8 text-center">
+                  <h4 className="text-2xl font-bold mb-3">Sunday Morning Worship</h4>
+                  <p className="text-white/90 text-4xl font-bold mb-2">10:30 AM</p>
+                  <p className="text-white/80 text-lg">Traditional & Contemporary Blended Service</p>
                 </div>
               </div>
             </div>

@@ -68,7 +68,7 @@ export default function GivePage() {
                 <h3 className="text-xl font-bold mb-4">In-Person</h3>
                 <p className="text-gray-600 mb-6">
                   Offering plates are available during our Sunday worship
-                  services at 9:00 AM and 11:00 AM.
+                  service at 10:30 AM.
                 </p>
                 <a
                   href="/about/visit"

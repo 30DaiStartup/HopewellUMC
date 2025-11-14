@@ -436,19 +436,12 @@ export default function ContactPage() {
                 </h2>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-4">Sunday School</h3>
-                  <p className="text-3xl font-bold text-white/90">9:15 AM</p>
-                  <p className="text-white/80 mt-2">All ages welcome</p>
-                </div>
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-4">
-                    Worship Service
-                  </h3>
-                  <p className="text-3xl font-bold text-white/90">10:30 AM</p>
-                  <p className="text-white/80 mt-2">Traditional worship</p>
-                </div>
+              <div className="text-center max-w-md mx-auto">
+                <h3 className="text-3xl font-bold mb-4">
+                  Worship Service
+                </h3>
+                <p className="text-5xl font-bold text-white/90 mb-3">10:30 AM</p>
+                <p className="text-xl text-white/80">Traditional worship</p>
               </div>
 
               <div className="text-center mt-8">

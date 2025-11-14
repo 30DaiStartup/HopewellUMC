@@ -46,14 +46,10 @@ export default function Home() {
           <div className="container mx-auto max-w-4xl px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">Join Us This Sunday</h2>
 
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-2">Sunday School</h3>
-                <p className="text-3xl font-bold">9:15 AM</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-2">Worship Service</h3>
-                <p className="text-3xl font-bold">10:30 AM</p>
+            <div className="max-w-md mx-auto mb-8">
+              <div className="bg-white/10 backdrop-blur rounded-lg p-8">
+                <h3 className="text-2xl font-semibold mb-3">Worship Service</h3>
+                <p className="text-4xl font-bold">10:30 AM</p>
               </div>
             </div>
 

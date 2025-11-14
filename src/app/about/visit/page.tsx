@@ -35,21 +35,12 @@ export default function VisitPage() {
             </div>
 
             <div className="bg-[#0b5a7f] text-white rounded-lg p-8 md:p-12">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-bold mb-2">Sunday School</h3>
-                  <p className="text-3xl font-bold mb-2">9:15 AM</p>
-                  <p className="text-white/80">
-                    Classes for all ages, from children to adults. A great way to connect and grow in faith together.
-                  </p>
-                </div>
-                <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-bold mb-2">Worship Service</h3>
-                  <p className="text-3xl font-bold mb-2">10:30 AM</p>
-                  <p className="text-white/80">
-                    A blend of traditional and contemporary worship with meaningful music, prayer, and biblical teaching.
-                  </p>
-                </div>
+              <div className="text-center">
+                <h3 className="text-3xl font-bold mb-3">Worship Service</h3>
+                <p className="text-5xl font-bold mb-4">10:30 AM</p>
+                <p className="text-xl text-white/90 max-w-2xl mx-auto">
+                  A blend of traditional and contemporary worship with meaningful music, prayer, and biblical teaching.
+                </p>
               </div>
             </div>
           </div>

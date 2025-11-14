@@ -84,13 +84,6 @@ export default function ChildrensMinistryPage() {
                       <p className="text-gray-700">Ages 4-13 years old</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <Clock className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">When</p>
-                      <p className="text-gray-700">Every Sunday, 9:15 AM - 10:00 AM</p>
-                    </div>
-                  </div>
                 </div>
                 <p className="text-gray-700">
                   Join us for interactive Bible lessons, fun activities, and age-appropriate teaching

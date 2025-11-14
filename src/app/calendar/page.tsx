@@ -315,14 +315,7 @@ export default function CalendarPage() {
                 <h3 className="text-xl font-bold mb-4 text-[#0b5a7f]">
                   Sunday
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="font-semibold">Sunday School</p>
-                      <p className="text-sm text-gray-600">All ages</p>
-                    </div>
-                    <span className="text-gray-700 font-medium">9:15 AM</span>
-                  </div>
+                <div>
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-semibold">Worship Service</p>

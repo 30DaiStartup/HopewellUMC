@@ -346,11 +346,7 @@ export default function AboutPage() {
                         <Clock className="h-5 w-5" />
                         <h4 className="text-xl font-semibold">Sunday Schedule</h4>
                       </div>
-                      <div className="ml-7 space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span>Sunday School</span>
-                          <span className="font-semibold">9:15 AM</span>
-                        </div>
+                      <div className="ml-7">
                         <div className="flex justify-between items-center">
                           <span>Worship Service</span>
                           <span className="font-semibold">10:30 AM</span>

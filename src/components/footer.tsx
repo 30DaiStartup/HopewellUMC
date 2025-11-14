@@ -48,7 +48,7 @@ export function Footer() {
         <div className="text-center mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-white/10">
           <h3 className="text-lg sm:text-xl font-semibold mb-3">Join Us for Worship</h3>
           <p className="text-sm sm:text-base text-white/80">
-            Sunday Services: 9:00 AM & 11:00 AM
+            Sunday Services: 10:30 AM
           </p>
         </div>
 
