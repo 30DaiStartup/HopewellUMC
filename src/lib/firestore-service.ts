@@ -188,12 +188,14 @@ export async function getAllPosts(): Promise<Post[]> {
       content: data.content,
       mediaUrl: data.mediaUrl,
       mediaType: data.mediaType,
+      linkPreview: data.linkPreview,
       createdAt: data.createdAt?.toDate() || new Date(),
       likes: data.likes || [],
       comments: (data.comments || []).map((comment: { createdAt?: { toDate?: () => Date }; [key: string]: unknown }) => ({
         ...comment,
         createdAt: comment.createdAt?.toDate ? comment.createdAt.toDate() : new Date(comment.createdAt as string | number | Date),
       })),
+      fastingDurationMs: data.fastingDurationMs,
     };
   });
 }
@@ -222,12 +224,14 @@ export function subscribeToPosts(callback: (posts: Post[]) => void) {
         content: data.content,
         mediaUrl: data.mediaUrl,
         mediaType: data.mediaType,
+        linkPreview: data.linkPreview,
         createdAt: data.createdAt?.toDate() || new Date(),
         likes: data.likes || [],
         comments: (data.comments || []).map((comment: { createdAt?: { toDate?: () => Date }; [key: string]: unknown }) => ({
           ...comment,
           createdAt: comment.createdAt?.toDate ? comment.createdAt.toDate() : new Date(comment.createdAt as string | number | Date),
         })),
+        fastingDurationMs: data.fastingDurationMs,
       };
     });
     callback(posts);
@@ -258,12 +262,14 @@ export function subscribeToTopPosts(callback: (posts: Post[]) => void) {
         content: data.content,
         mediaUrl: data.mediaUrl,
         mediaType: data.mediaType,
+        linkPreview: data.linkPreview,
         createdAt: data.createdAt?.toDate() || new Date(),
         likes: data.likes || [],
         comments: (data.comments || []).map((comment: { createdAt?: { toDate?: () => Date }; [key: string]: unknown }) => ({
           ...comment,
           createdAt: comment.createdAt?.toDate ? comment.createdAt.toDate() : new Date(comment.createdAt as string | number | Date),
         })),
+        fastingDurationMs: data.fastingDurationMs,
       };
     });
     callback(posts);
