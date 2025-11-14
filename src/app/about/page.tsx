@@ -2,6 +2,7 @@
 
 import { Building2, Heart, Users, Globe, Phone, Mail, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
@@ -213,7 +214,15 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {/* Pastor */}
               <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <Image
+                    src="/staff-photos/don-brown.jpg"
+                    alt="Rev. Don Brown"
+                    fill
+                    className="object-cover rounded-full"
+                    sizes="96px"
+                  />
+                </div>
                 <h3 className="text-xl font-bold mb-1">Rev. Don Brown</h3>
                 <p className="text-gray-600 mb-4">Pastor</p>
                 <div className="flex flex-col gap-2 text-sm text-gray-700">
@@ -226,7 +235,15 @@ export default function AboutPage() {
 
               {/* Christian Education */}
               <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <Image
+                    src="/staff-photos/sarah-erskine.jpg"
+                    alt="Sarah Erskine"
+                    fill
+                    className="object-cover rounded-full"
+                    sizes="96px"
+                  />
+                </div>
                 <h3 className="text-xl font-bold mb-1">Sarah Erskine</h3>
                 <p className="text-gray-600 mb-4">Director of Christian Education</p>
                 <div className="flex flex-col gap-2 text-sm text-gray-700">
@@ -239,7 +256,9 @@ export default function AboutPage() {
 
               {/* Youth Ministries */}
               <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                <div className="w-24 h-24 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl text-[#0b5a7f] font-bold">LJ</span>
+                </div>
                 <h3 className="text-xl font-bold mb-1">Lera Jackson</h3>
                 <p className="text-gray-600 mb-4">Director of Youth Ministries</p>
                 <div className="flex flex-col gap-2 text-sm text-gray-700">
