@@ -1,5 +1,6 @@
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { Button } from "@/components/ui/button";
+import { PrayerCarousel } from "@/components/prayer-carousel";
 import Link from "next/link";
 
 export default function Home() {
@@ -373,6 +374,15 @@ export default function Home() {
                 Submit Prayer Request
               </Button>
             </Link>
+
+            {/* Prayer Requests Carousel */}
+            <div className="mt-12">
+              <h3 className="text-2xl font-bold mb-6">Current Prayer Requests</h3>
+              <p className="text-lg mb-6 opacity-90">
+                Join us in praying for these requests from our community
+              </p>
+              <PrayerCarousel />
+            </div>
           </div>
         </section>
 
