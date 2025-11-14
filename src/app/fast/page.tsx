@@ -28,14 +28,14 @@ function FastingAppContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sacred-card sticky top-0 z-40 border-b-0 shadow-md">
+        <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Church Fasting</h1>
-              <p className="text-sm text-gray-600">Strengthen in Spirit Together</p>
+              <h1 className="text-3xl font-bold text-primary mb-1">Church Fasting</h1>
+              <p className="text-sm text-muted-foreground font-medium tracking-wide">Strengthen in Spirit Together</p>
             </div>
 
             <div className="flex items-center gap-3">
@@ -44,7 +44,7 @@ function FastingAppContent() {
                   {!currentUser.isFasting && (
                     <Button
                       onClick={joinFast}
-                      className="bg-[#0b5a7f] hover:bg-[#094e6d]"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 divine-glow"
                       size="sm"
                     >
                       Join Fast
@@ -52,20 +52,20 @@ function FastingAppContent() {
                   )}
 
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold text-sm overflow-hidden">
+                    <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm overflow-hidden ring-2 ring-primary/10">
                       {currentUser.avatar ? (
                         <Image
                           src={currentUser.avatar}
                           alt={currentUser.displayName}
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                           className="w-full h-full object-cover"
                         />
                       ) : (
                         <span>{currentUser.displayName.charAt(0).toUpperCase()}</span>
                       )}
                     </div>
-                    <span className="text-sm font-medium text-gray-700 hidden sm:inline">
+                    <span className="text-sm font-medium text-foreground hidden sm:inline">
                       {currentUser.displayName}
                     </span>
                   </div>
@@ -74,7 +74,7 @@ function FastingAppContent() {
                     onClick={logout}
                     variant="ghost"
                     size="sm"
-                    className="text-gray-600"
+                    className="text-muted-foreground hover:text-foreground"
                   >
                     <LogOut className="h-4 w-4" />
                   </Button>
@@ -82,7 +82,7 @@ function FastingAppContent() {
               ) : (
                 <Button
                   onClick={() => setAuthModalOpen(true)}
-                  className="bg-[#0b5a7f] hover:bg-[#094e6d]"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 divine-glow"
                 >
                   Sign In
                 </Button>
@@ -100,20 +100,23 @@ function FastingAppContent() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden mb-8">
-          <div className="flex border-b border-gray-200 overflow-x-auto">
+        <div className="sacred-card sacred-card-hover overflow-hidden mb-8">
+          <div className="flex border-b border-border/50 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors whitespace-nowrap ${
+                className={`flex items-center gap-2 px-6 py-4 font-medium transition-all duration-300 whitespace-nowrap relative group ${
                   activeTab === tab.id
-                    ? 'text-[#0b5a7f] border-b-2 border-[#0b5a7f] bg-[#0b5a7f]/10'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                <tab.icon className="h-5 w-5" />
-                {tab.label}
+                {activeTab === tab.id && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
+                )}
+                <tab.icon className="h-5 w-5 transition-transform group-hover:scale-110" />
+                <span className="font-serif">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -128,14 +131,14 @@ function FastingAppContent() {
                 {posts.length > 0 ? (
                   posts.map((post) => <PostCard key={post.id} post={post} />)
                 ) : (
-                  <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Home className="h-8 w-8 text-gray-400" />
+                  <div className="sacred-card p-12 sm:p-16 text-center">
+                    <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-4 ring-primary/5">
+                      <Home className="h-10 w-10 text-primary/60" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-foreground mb-3 font-serif">
                       No posts yet
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground max-w-sm mx-auto leading-relaxed">
                       Be the first to share your journey with the community
                     </p>
                   </div>
@@ -155,14 +158,14 @@ function FastingAppContent() {
 
               {/* Info Card */}
               {!currentUser && (
-                <div className="mt-6 bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-lg p-6">
-                  <h4 className="font-semibold text-[#074159] mb-2">Join the Community</h4>
-                  <p className="text-sm text-[#094e6d] mb-4">
+                <div className="mt-6 sacred-card sacred-card-hover p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+                  <h4 className="font-semibold text-primary mb-3 font-serif text-lg">Join the Community</h4>
+                  <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
                     Sign in to participate in the fast, track your journey, and connect with others.
                   </p>
                   <Button
                     onClick={() => setAuthModalOpen(true)}
-                    className="w-full bg-[#0b5a7f] hover:bg-[#094e6d]"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 divine-glow"
                   >
                     Sign In
                   </Button>

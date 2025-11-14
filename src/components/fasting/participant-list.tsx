@@ -19,60 +19,70 @@ export function ParticipantList() {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-      <div className="flex items-center gap-2 mb-4">
-        <UserIcon className="h-5 w-5 text-[#0b5a7f]" />
-        <h3 className="text-lg font-semibold text-gray-900">
-          Participants ({participants.length})
+    <div className="sacred-card sacred-card-hover p-6">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+          <UserIcon className="h-4 w-4 text-primary" />
+        </div>
+        <h3 className="text-lg font-semibold text-foreground font-serif">
+          Participants
         </h3>
+        <span className="ml-auto text-sm font-medium text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+          {participants.length}
+        </span>
       </div>
 
-      <div className="space-y-3 max-h-[500px] overflow-y-auto">
+      <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
         {participants.map((participant) => (
           <div
             key={participant.id}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-3 p-3 rounded-xl hover:bg-secondary/50 transition-all duration-300 group relative"
           >
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold shrink-0 overflow-hidden">
+            <div className="relative w-11 h-11 rounded-full bg-primary/15 flex items-center justify-center text-primary font-semibold shrink-0 overflow-hidden ring-2 ring-primary/10 group-hover:ring-primary/20 transition-all">
               {participant.avatar ? (
                 <Image
                   src={participant.avatar}
                   alt={participant.displayName}
-                  width={40}
-                  height={40}
+                  width={44}
+                  height={44}
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <span>{participant.displayName.charAt(0).toUpperCase()}</span>
               )}
+              {/* Status Badge */}
+              {participant.isFasting && (
+                <div
+                  className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-accent rounded-full shrink-0 ring-2 ring-card divine-pulse"
+                  title="Currently fasting"
+                />
+              )}
             </div>
 
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-gray-900 truncate">
+              <p className="font-semibold text-foreground truncate flex items-center gap-2">
                 {participant.displayName}
                 {participant.isAdmin && (
-                  <span className="ml-2 text-xs bg-[#0b5a7f]/20 text-[#094e6d] px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-accent/20 text-accent-foreground px-2 py-0.5 rounded-full font-medium">
                     Admin
                   </span>
                 )}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {formatJoinDate(participant.joinedAt)}
               </p>
             </div>
-
-            {/* Status Badge */}
-            {participant.isFasting && (
-              <div className="w-3 h-3 bg-green-500 rounded-full shrink-0" title="Currently fasting" />
-            )}
           </div>
         ))}
 
         {participants.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            <p>No participants yet</p>
+          <div className="text-center py-12 text-muted-foreground">
+            <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-3">
+              <UserIcon className="h-8 w-8 text-muted-foreground/50" />
+            </div>
+            <p className="font-medium">No participants yet</p>
             <p className="text-sm mt-1">Be the first to join!</p>
           </div>
         )}

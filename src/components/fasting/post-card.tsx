@@ -61,18 +61,18 @@ export function PostCard({ post }: PostCardProps) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+    <div className="sacred-card sacred-card-hover p-6">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold overflow-hidden">
+          <div className="w-11 h-11 rounded-full bg-primary/15 flex items-center justify-center text-primary font-semibold overflow-hidden ring-2 ring-primary/10">
             {post.userAvatar ? (
               <Image
                 src={post.userAvatar}
                 alt={post.userName}
-                width={40}
-                height={40}
+                width={44}
+                height={44}
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -82,17 +82,17 @@ export function PostCard({ post }: PostCardProps) {
 
           {/* User info */}
           <div>
-            <p className="font-semibold text-gray-900">{post.userName}</p>
-            <p className="text-sm text-gray-500">{formatRelativeTime(post.createdAt)}</p>
+            <p className="font-semibold text-foreground">{post.userName}</p>
+            <p className="text-sm text-muted-foreground">{formatRelativeTime(post.createdAt)}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Fasting Duration Bubble */}
           {post.fastingDurationMs && (
-            <div className="bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-full px-3 py-1.5 flex items-center gap-1.5">
+            <div className="bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
               <span className="text-lg">🙏</span>
-              <span className="text-sm font-semibold text-[#094e6d]">
+              <span className="text-sm font-semibold text-primary">
                 {formatFastingDuration(post.fastingDurationMs)}
               </span>
             </div>
@@ -104,7 +104,7 @@ export function PostCard({ post }: PostCardProps) {
               variant="ghost"
               size="sm"
               onClick={handleDelete}
-              className="text-gray-400 hover:text-red-600"
+              className="text-muted-foreground hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -184,43 +184,43 @@ export function PostCard({ post }: PostCardProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
+      <div className="flex items-center gap-6 pt-4 border-t border-border/50">
         <button
           onClick={handleLike}
           disabled={!currentUser}
-          className={`flex items-center gap-2 text-sm font-medium transition-colors ${
+          className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 group ${
             hasLiked
               ? 'text-red-500'
-              : 'text-gray-500 hover:text-red-500'
+              : 'text-muted-foreground hover:text-red-500'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
-          <Heart className={`h-5 w-5 ${hasLiked ? 'fill-current' : ''}`} />
-          <span>{post.likes.length}</span>
+          <Heart className={`h-5 w-5 transition-transform group-hover:scale-110 ${hasLiked ? 'fill-current' : ''}`} />
+          <span className="tabular-nums">{post.likes.length}</span>
         </button>
 
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#0b5a7f] transition-colors"
+          className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-300 group"
         >
-          <MessageCircle className="h-5 w-5" />
-          <span>{post.comments.length}</span>
+          <MessageCircle className="h-5 w-5 transition-transform group-hover:scale-110" />
+          <span className="tabular-nums">{post.comments.length}</span>
         </button>
       </div>
 
       {/* Comments Section */}
       {showComments && (
-        <div className="mt-4 pt-4 border-t border-gray-100 space-y-4">
+        <div className="mt-4 pt-4 border-t border-border/50 space-y-4">
           {/* Comment List */}
           {post.comments.map((comment) => (
             <div key={comment.id} className="flex gap-3">
               {/* Comment Avatar */}
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-semibold text-sm shrink-0 overflow-hidden">
+              <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-foreground font-semibold text-sm shrink-0 overflow-hidden ring-2 ring-primary/5">
                 {comment.userAvatar ? (
                   <Image
                     src={comment.userAvatar}
                     alt={comment.userName}
-                    width={32}
-                    height={32}
+                    width={36}
+                    height={36}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -230,25 +230,25 @@ export function PostCard({ post }: PostCardProps) {
 
               {/* Comment Content */}
               <div className="flex-1">
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <p className="font-semibold text-sm text-gray-900">{comment.userName}</p>
-                  <p className="text-sm text-gray-700 mt-1">{comment.content}</p>
+                <div className="bg-secondary/50 rounded-xl p-3 backdrop-blur-sm">
+                  <p className="font-semibold text-sm text-foreground">{comment.userName}</p>
+                  <p className="text-sm text-foreground/90 mt-1">{comment.content}</p>
                 </div>
 
                 {/* Comment Actions */}
-                <div className="flex items-center gap-3 mt-1 ml-2">
+                <div className="flex items-center gap-3 mt-2 ml-2">
                   <button
                     onClick={() => currentUser && likeComment(post.id, comment.id)}
                     disabled={!currentUser}
-                    className={`text-xs font-medium ${
+                    className={`text-xs font-medium transition-colors ${
                       currentUser && comment.likes.includes(currentUser.id)
                         ? 'text-red-500'
-                        : 'text-gray-500 hover:text-red-500'
+                        : 'text-muted-foreground hover:text-red-500'
                     } disabled:opacity-50`}
                   >
                     {comment.likes.length > 0 ? `${comment.likes.length} Like${comment.likes.length !== 1 ? 's' : ''}` : 'Like'}
                   </button>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-muted-foreground">
                     {formatRelativeTime(comment.createdAt)}
                   </span>
                 </div>

@@ -4,26 +4,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 15%;
-    --primary: 199 84% 27%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 0 0% 15%;
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 199 84% 27%;
-    --accent-foreground: 0 0% 100%;
+    --background: 42 35% 96%;
+    --foreground: 240 20% 15%;
+    --card: 40 30% 98%;
+    --card-foreground: 240 20% 15%;
+    --popover: 40 30% 98%;
+    --popover-foreground: 240 20% 15%;
+    --primary: 240 45% 25%;
+    --primary-foreground: 40 80% 92%;
+    --secondary: 42 20% 88%;
+    --secondary-foreground: 240 20% 15%;
+    --muted: 42 20% 90%;
+    --muted-foreground: 240 10% 45%;
+    --accent: 38 85% 60%;
+    --accent-foreground: 240 30% 15%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 199 84% 27%;
-    --radius: 0.5rem;
+    --border: 42 15% 88%;
+    --input: 42 15% 88%;
+    --ring: 240 45% 25%;
+    --radius: 1rem;
+
+    /* Custom spiritual color palette */
+    --sacred-deep: 240 45% 25%;
+    --sacred-medium: 240 38% 35%;
+    --sacred-light: 240 30% 85%;
+    --sacred-glow: 240 40% 50%;
+    --divine-gold: 38 85% 60%;
+    --divine-amber: 35 75% 55%;
+    --divine-light: 42 80% 92%;
+    --earth-cream: 42 35% 96%;
+    --earth-warm: 35 30% 90%;
   }
 
   .dark {
@@ -102,6 +113,142 @@
     -webkit-text-stroke: 3px currentColor;
     -webkit-text-fill-color: transparent;
     paint-order: stroke fill;
+  }
+
+  /* Sacred card styling with subtle texture */
+  .sacred-card {
+    @apply bg-card border border-border/50 rounded-2xl shadow-lg;
+    background-image:
+      radial-gradient(at 0% 0%, hsl(var(--sacred-light)) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--divine-light)) 0px, transparent 50%);
+    backdrop-filter: blur(10px);
+  }
+
+  .sacred-card-hover {
+    @apply transition-all duration-500 hover:shadow-xl;
+    transition-property: transform, box-shadow, background;
+  }
+
+  .sacred-card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -12px hsl(var(--sacred-deep) / 0.15);
+  }
+
+  /* Divine glow effect */
+  .divine-glow {
+    position: relative;
+  }
+
+  .divine-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, hsl(var(--divine-gold)), hsl(var(--sacred-glow)));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .divine-glow:hover::before {
+    opacity: 0.6;
+  }
+
+  /* Breathing animation for sacred elements */
+  @keyframes sacred-breathe {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+  }
+
+  .sacred-breathe {
+    animation: sacred-breathe 4s ease-in-out infinite;
+  }
+
+  /* Gentle pulse for active states */
+  @keyframes divine-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(var(--divine-gold) / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 12px hsl(var(--divine-gold) / 0);
+    }
+  }
+
+  .divine-pulse {
+    animation: divine-pulse 2s ease-in-out infinite;
+  }
+
+  /* Shimmer effect for highlights */
+  @keyframes divine-shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .divine-shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--sacred-deep)) 0%,
+      hsl(var(--divine-gold)) 50%,
+      hsl(var(--sacred-deep)) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: divine-shimmer 3s linear infinite;
+  }
+
+  /* Ornamental divider */
+  .ornamental-divider {
+    @apply relative flex items-center justify-center my-8;
+  }
+
+  .ornamental-divider::before,
+  .ornamental-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, hsl(var(--border)), transparent);
+  }
+
+  .ornamental-divider span {
+    @apply px-6 text-sm font-medium;
+    color: hsl(var(--sacred-medium));
+  }
+
+  /* Sacred gradient backgrounds */
+  .sacred-gradient-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--sacred-deep)) 0%,
+      hsl(var(--sacred-medium)) 50%,
+      hsl(var(--sacred-deep)) 100%
+    );
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sacred-gradient-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, hsl(var(--divine-gold) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(var(--sacred-glow) / 0.15) 0%, transparent 50%);
+    animation: sacred-breathe 8s ease-in-out infinite;
   }
 }
 

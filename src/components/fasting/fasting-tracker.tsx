@@ -138,12 +138,14 @@ export function FastingTracker() {
 
   if (!currentUser?.isFasting) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm text-center">
-        <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+      <div className="sacred-card p-12 text-center">
+        <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-4 ring-primary/5">
+          <BookOpen className="h-10 w-10 text-primary/60" />
+        </div>
+        <h3 className="text-2xl font-semibold text-foreground mb-3 font-serif">
           Join the Fast
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground max-w-sm mx-auto leading-relaxed">
           This tracker is available to those participating in the fast.
         </p>
       </div>
@@ -153,54 +155,60 @@ export function FastingTracker() {
   return (
     <div className="space-y-6">
       {/* Timer Section */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
-        <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
+      <div className="sacred-card sacred-card-hover p-8">
+        <h3 className="text-2xl font-semibold text-foreground mb-8 text-center font-serif">
           Your Fasting Journey
         </h3>
 
         {/* Timer Display */}
-        <div className="bg-gradient-to-br from-[#0b5a7f]/10 to-[#0b5a7f]/20 rounded-lg p-4 sm:p-8 mb-6">
-          <div className="flex justify-center gap-2 sm:gap-4 mb-6">
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.hours}</div>
-              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Hours</div>
-            </div>
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">:</div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.minutes}</div>
-              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Minutes</div>
-            </div>
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">:</div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.seconds}</div>
-              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Seconds</div>
-            </div>
+        <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 rounded-2xl p-6 sm:p-10 mb-6 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-50" />
+          <div className="relative flex justify-center gap-3 sm:gap-6 mb-6">
+            {[
+              { value: duration.hours, label: 'Hours' },
+              { value: duration.minutes, label: 'Minutes' },
+              { value: duration.seconds, label: 'Seconds' }
+            ].map((item, index) => (
+              <div key={item.label} className="flex items-center">
+                {index > 0 && (
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary/40 mx-2 font-serif">:</div>
+                )}
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary font-serif tabular-nums">
+                    {item.value}
+                  </div>
+                  <div className="text-xs sm:text-sm text-primary/70 mt-2 uppercase tracking-wide font-medium">
+                    {item.label}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="h-2 bg-[#0b5a7f]/30 rounded-full overflow-hidden">
+          <div className="h-2 bg-primary/20 rounded-full overflow-hidden relative">
             <div
-              className="h-full bg-[#0b5a7f] transition-all duration-1000"
+              className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-1000"
               style={{ width: currentSession ? '100%' : '0%' }}
             />
           </div>
         </div>
 
         {/* Control Buttons */}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-4">
           {!currentSession ? (
             <>
-              <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <input
                   type="checkbox"
                   checked={shareWithCommunity}
                   onChange={(e) => setShareWithCommunity(e.target.checked)}
-                  className="rounded border-gray-300 text-[#0b5a7f] focus:ring-[#0b5a7f]"
+                  className="rounded border-border text-primary focus:ring-primary focus:ring-offset-2"
                 />
                 <span>Share my progress with the community</span>
               </label>
               <Button
                 onClick={() => startFasting(shareWithCommunity)}
-                className="bg-green-600 hover:bg-green-700 gap-2"
+                className="bg-green-600 hover:bg-green-700 gap-2 shadow-lg hover:shadow-xl transition-all duration-300 divine-glow text-white"
                 size="lg"
               >
                 <Play className="h-5 w-5" />
@@ -210,7 +218,7 @@ export function FastingTracker() {
           ) : (
             <Button
               onClick={endFasting}
-              className="bg-red-600 hover:bg-red-700 gap-2"
+              className="bg-red-600 hover:bg-red-700 gap-2 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
               size="lg"
             >
               <Square className="h-5 w-5" />
@@ -227,55 +235,57 @@ export function FastingTracker() {
       />
 
       {/* Statistics Dashboard */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-[#0b5a7f]" />
+      <div className="sacred-card sacred-card-hover p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <TrendingUp className="h-5 w-5 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold text-foreground font-serif">
             Your Progress
           </h3>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Total Fasting Time */}
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Clock className="h-4 w-4 text-blue-600" />
-              <span className="text-xs text-blue-600 font-medium">Total Time</span>
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border border-blue-500/20 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="h-5 w-5 text-blue-600" />
+              <span className="text-xs text-blue-700 font-semibold uppercase tracking-wide">Total Time</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-blue-900">
+            <div className="text-2xl sm:text-3xl font-bold text-blue-900 font-serif tabular-nums">
               {formatDurationText(statistics.totalTime)}
             </div>
           </div>
 
           {/* Completed Sessions */}
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Target className="h-4 w-4 text-green-600" />
-              <span className="text-xs text-green-600 font-medium">Sessions</span>
+          <div className="bg-gradient-to-br from-green-500/10 to-green-600/20 border border-green-500/20 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="h-5 w-5 text-green-600" />
+              <span className="text-xs text-green-700 font-semibold uppercase tracking-wide">Sessions</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-green-900">
+            <div className="text-2xl sm:text-3xl font-bold text-green-900 font-serif tabular-nums">
               {statistics.completedCount}
             </div>
           </div>
 
           {/* Longest Session */}
-          <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Award className="h-4 w-4 text-purple-600" />
-              <span className="text-xs text-purple-600 font-medium">Longest</span>
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/20 border border-purple-500/20 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center gap-2 mb-3">
+              <Award className="h-5 w-5 text-purple-600" />
+              <span className="text-xs text-purple-700 font-semibold uppercase tracking-wide">Longest</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-purple-900">
+            <div className="text-2xl sm:text-3xl font-bold text-purple-900 font-serif tabular-nums">
               {formatDurationText(statistics.longestSession)}
             </div>
           </div>
 
           {/* Current Streak */}
-          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Flame className="h-4 w-4 text-orange-600" />
-              <span className="text-xs text-orange-600 font-medium">Streak</span>
+          <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border border-orange-500/20 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center gap-2 mb-3">
+              <Flame className="h-5 w-5 text-orange-600" />
+              <span className="text-xs text-orange-700 font-semibold uppercase tracking-wide">Streak</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-orange-900">
+            <div className="text-2xl sm:text-3xl font-bold text-orange-900 font-serif tabular-nums">
               {statistics.streak} {statistics.streak === 1 ? 'day' : 'days'}
             </div>
           </div>
@@ -283,10 +293,10 @@ export function FastingTracker() {
 
         {/* Average Session */}
         {statistics.completedCount > 0 && (
-          <div className="mt-4 bg-gray-50 rounded-lg p-4">
+          <div className="mt-6 bg-secondary/50 rounded-xl p-5 border border-border/50">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Average Session Duration</span>
-              <span className="text-lg font-semibold text-gray-900">
+              <span className="text-sm text-muted-foreground font-medium">Average Session Duration</span>
+              <span className="text-xl font-semibold text-foreground font-serif tabular-nums">
                 {formatDurationText(statistics.averageTime)}
               </span>
             </div>
@@ -295,11 +305,15 @@ export function FastingTracker() {
       </div>
 
       {/* Milestones & Achievements */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
-          <Award className="h-5 w-5 text-yellow-600" />
-          Milestones
-        </h3>
+      <div className="sacred-card sacred-card-hover p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+            <Award className="h-5 w-5 text-accent" />
+          </div>
+          <h3 className="text-xl font-semibold text-foreground font-serif">
+            Milestones
+          </h3>
+        </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {/* First Fast */}
@@ -366,34 +380,39 @@ export function FastingTracker() {
 
       {/* Fasting History */}
       {statistics.completedSessions.length > 0 && (
-        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-[#0b5a7f]" />
-              Fasting History
-            </h3>
+        <div className="sacred-card sacred-card-hover p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Calendar className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground font-serif">
+                Fasting History
+              </h3>
+            </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowHistory(!showHistory)}
+              className="text-muted-foreground hover:text-foreground"
             >
               {showHistory ? 'Hide' : 'Show'} History
             </Button>
           </div>
 
           {showHistory && (
-            <div className="space-y-3 max-h-[60vh] sm:max-h-[400px] overflow-y-auto">
+            <div className="space-y-3 max-h-[60vh] sm:max-h-[400px] overflow-y-auto pr-2">
               {statistics.completedSessions.map((session, index) => (
                 <div
                   key={session.id}
-                  className="flex items-center justify-between bg-gray-50 p-3 sm:p-4 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between bg-secondary/40 p-4 rounded-xl hover:bg-secondary/60 transition-all duration-300 border border-border/30"
                 >
-                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                    <div className="bg-[#0b5a7f]/20 text-[#0b5a7f] rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center text-sm font-semibold">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="bg-primary/15 text-primary rounded-full w-9 h-9 flex-shrink-0 flex items-center justify-center text-sm font-bold ring-2 ring-primary/10">
                       {index + 1}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">
+                      <div className="text-sm font-medium text-foreground truncate">
                         {new Date(session.startTime).toLocaleDateString('en-US', {
                           weekday: 'short',
                           month: 'short',
@@ -401,7 +420,7 @@ export function FastingTracker() {
                           year: 'numeric',
                         })}
                       </div>
-                      <div className="text-xs text-gray-500 truncate">
+                      <div className="text-xs text-muted-foreground truncate">
                         {new Date(session.startTime).toLocaleTimeString('en-US', {
                           hour: 'numeric',
                           minute: '2-digit',
@@ -415,9 +434,9 @@ export function FastingTracker() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                  <div className="flex items-center gap-3 flex-shrink-0">
                     <div className="text-right">
-                      <div className="text-base sm:text-lg font-semibold text-[#0b5a7f]">
+                      <div className="text-lg font-semibold text-primary font-serif tabular-nums">
                         {formatDurationText(session.duration)}
                       </div>
                     </div>
@@ -427,7 +446,7 @@ export function FastingTracker() {
                           deleteFastingSession(session.id);
                         }
                       }}
-                      className="text-gray-400 hover:text-red-500 transition-colors p-1 min-w-[32px] min-h-[32px] flex items-center justify-center"
+                      className="text-muted-foreground hover:text-destructive transition-colors p-1 min-w-[32px] min-h-[32px] flex items-center justify-center"
                       title="Delete session"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -439,7 +458,7 @@ export function FastingTracker() {
           )}
 
           {!showHistory && (
-            <div className="text-center text-sm text-gray-500 py-4">
+            <div className="text-center text-sm text-muted-foreground py-6">
               Click &quot;Show History&quot; to view your past {statistics.completedCount} fasting {statistics.completedCount === 1 ? 'session' : 'sessions'}
             </div>
           )}
@@ -447,46 +466,75 @@ export function FastingTracker() {
       )}
 
       {/* Daily Content */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h4 className="font-semibold text-gray-900 mb-4">Daily Scripture</h4>
-        <div className="bg-[#0b5a7f]/10 border-l-4 border-[#0b5a7f] p-4 rounded">
-          <p className="text-sm font-semibold text-[#074159] mb-2">{dailyScripture.reference}</p>
-          <p className="text-gray-700 italic">{dailyScripture.text}</p>
+      <div className="sacred-card sacred-card-hover p-6 space-y-8">
+        <div>
+          <h4 className="font-serif font-semibold text-foreground mb-4 text-lg flex items-center gap-2">
+            <span className="text-primary">✦</span>
+            Daily Scripture
+          </h4>
+          <div className="bg-primary/5 border-l-4 border-primary p-5 rounded-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 text-6xl text-primary/5 font-serif">"</div>
+            <p className="text-sm font-semibold text-primary mb-3">{dailyScripture.reference}</p>
+            <p className="text-foreground/90 italic leading-relaxed relative z-10">{dailyScripture.text}</p>
+          </div>
         </div>
 
-        <h4 className="font-semibold text-gray-900 mt-6 mb-4">Daily Tip</h4>
-        <div className="bg-amber-50 border-l-4 border-amber-600 p-4 rounded">
-          <p className="text-sm font-semibold text-amber-900 mb-2">{dailyTip.title}</p>
-          <p className="text-gray-700">{dailyTip.content}</p>
+        <div className="ornamental-divider">
+          <span>✦</span>
         </div>
 
-        <h4 className="font-semibold text-gray-900 mt-6 mb-4">Prayer Suggestion</h4>
-        <div className="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded">
-          <p className="text-sm font-semibold text-emerald-900 mb-2">Based on {dailyPrayerSuggestion.scriptureReference}</p>
-          <p className="text-gray-700">{dailyPrayerSuggestion.prayer}</p>
+        <div>
+          <h4 className="font-serif font-semibold text-foreground mb-4 text-lg flex items-center gap-2">
+            <span className="text-accent">✦</span>
+            Daily Tip
+          </h4>
+          <div className="bg-accent/5 border-l-4 border-accent p-5 rounded-xl">
+            <p className="text-sm font-semibold text-accent-foreground mb-3">{dailyTip.title}</p>
+            <p className="text-foreground/90 leading-relaxed">{dailyTip.content}</p>
+          </div>
+        </div>
+
+        <div className="ornamental-divider">
+          <span>✦</span>
+        </div>
+
+        <div>
+          <h4 className="font-serif font-semibold text-foreground mb-4 text-lg flex items-center gap-2">
+            <span className="text-green-600">✦</span>
+            Prayer Suggestion
+          </h4>
+          <div className="bg-green-500/5 border-l-4 border-green-600 p-5 rounded-xl">
+            <p className="text-sm font-semibold text-green-900 mb-3">Based on {dailyPrayerSuggestion.scriptureReference}</p>
+            <p className="text-foreground/90 leading-relaxed">{dailyPrayerSuggestion.prayer}</p>
+          </div>
         </div>
       </div>
 
       {/* Journal Section */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h4 className="font-semibold text-gray-900 mb-4">Personal Journal</h4>
+      <div className="sacred-card sacred-card-hover p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <BookOpen className="h-5 w-5 text-primary" />
+          </div>
+          <h4 className="font-serif font-semibold text-foreground text-xl">Personal Journal</h4>
+        </div>
 
         {/* Mood Selection */}
-        <div className="mb-4">
-          <label className="text-sm text-gray-600 mb-2 block">How are you feeling?</label>
+        <div className="mb-5">
+          <label className="text-sm text-muted-foreground mb-3 block font-medium">How are you feeling?</label>
           <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-3">
             {moods.map((mood) => (
               <button
                 key={mood.value}
                 onClick={() => setSelectedMood(mood.value)}
-                className={`flex flex-col items-center p-3 sm:p-4 rounded-lg border-2 transition-all min-h-[80px] sm:min-h-0 ${
+                className={`flex flex-col items-center p-4 rounded-xl border-2 transition-all duration-300 min-h-[90px] sm:min-h-0 hover:scale-105 ${
                   selectedMood === mood.value
-                    ? 'border-[#0b5a7f] bg-[#0b5a7f]/10'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary bg-primary/10 shadow-md'
+                    : 'border-border/50 hover:border-primary/30 bg-secondary/30'
                 }`}
               >
-                <mood.icon className={`h-6 w-6 sm:h-7 sm:w-7 ${mood.color}`} />
-                <span className="text-xs sm:text-sm mt-1 text-gray-600">{mood.label}</span>
+                <mood.icon className={`h-7 w-7 ${mood.color}`} />
+                <span className="text-xs sm:text-sm mt-2 text-foreground font-medium">{mood.label}</span>
               </button>
             ))}
           </div>
@@ -497,43 +545,45 @@ export function FastingTracker() {
           value={journalContent}
           onChange={(e) => setJournalContent(e.target.value)}
           placeholder="What stirs in your spirit? Reflect on your journey..."
-          className="w-full min-h-[120px] p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#0b5a7f] mb-3"
+          className="w-full min-h-[140px] p-4 border border-border/50 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary bg-card/50 text-foreground placeholder:text-muted-foreground mb-4 transition-all duration-300"
         />
 
         {/* Share Option */}
-        <label className="flex items-center gap-2 mb-3 cursor-pointer">
+        <label className="flex items-center gap-2 mb-5 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
           <input
             type="checkbox"
             checked={shareToFeed}
             onChange={(e) => setShareToFeed(e.target.checked)}
-            className="rounded border-gray-300 text-[#0b5a7f] focus:ring-[#0b5a7f]"
+            className="rounded border-border text-primary focus:ring-primary focus:ring-offset-2"
           />
-          <span className="text-sm text-gray-700">Share this entry with the community</span>
+          <span>Share this entry with the community</span>
         </label>
 
         <Button
           onClick={handleAddJournalEntry}
           disabled={!journalContent.trim()}
-          className="w-full"
+          className="w-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 divine-glow"
         >
           Save Entry
         </Button>
 
         {/* Recent Entries */}
         {userEntries.length > 0 && (
-          <div className="mt-6">
-            <h5 className="text-sm font-semibold text-gray-700 mb-3">Recent Entries</h5>
-            <div className="space-y-3 max-h-[50vh] sm:max-h-[300px] overflow-y-auto">
+          <div className="mt-8">
+            <div className="ornamental-divider">
+              <span>Recent Entries</span>
+            </div>
+            <div className="space-y-3 max-h-[50vh] sm:max-h-[300px] overflow-y-auto pr-2">
               {userEntries.slice().reverse().map((entry) => (
-                <div key={entry.id} className="bg-gray-50 p-3 rounded-lg">
-                  <div className="flex items-center justify-between mb-2 gap-2">
+                <div key={entry.id} className="bg-secondary/40 p-4 rounded-xl border border-border/30 hover:border-border/50 transition-all">
+                  <div className="flex items-center justify-between mb-3 gap-2">
                     <div className="flex items-center gap-2 flex-wrap min-w-0 flex-1">
                       {entry.mood && (
-                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded whitespace-nowrap">
+                        <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full whitespace-nowrap font-medium">
                           {entry.mood}
                         </span>
                       )}
-                      <span className="text-xs text-gray-500 whitespace-nowrap">
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
                         {new Date(entry.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -543,13 +593,13 @@ export function FastingTracker() {
                           deleteJournalEntry(entry.id);
                         }
                       }}
-                      className="text-red-500 hover:text-red-700 transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center flex-shrink-0"
+                      className="text-muted-foreground hover:text-destructive transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center flex-shrink-0"
                       title="Delete entry"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
-                  <p className="text-sm text-gray-700 break-words">{entry.content}</p>
+                  <p className="text-sm text-foreground/90 break-words leading-relaxed">{entry.content}</p>
                 </div>
               ))}
             </div>

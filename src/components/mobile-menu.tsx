@@ -16,7 +16,6 @@ const primaryLinks = [
   { label: "Connect", href: "/connect" },
   { label: "Prayer", href: "/prayer" },
   { label: "Ministries", href: "/ministries" },
-  { label: "Fast", href: "/fast" },
 ];
 
 const secondaryLinks = {
@@ -39,6 +38,7 @@ const secondaryLinks = {
     { label: "Women's Ministries", href: "/ministries/womens" },
     { label: "Missions", href: "/ministries/missions" },
     { label: "All Ministries", href: "/ministries" },
+    { label: "Fast", href: "/fast" },
   ],
 };
 

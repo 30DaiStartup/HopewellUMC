@@ -11,7 +11,6 @@ const navLinks = [
   { label: "Connect", href: "/connect" },
   { label: "Prayer", href: "/prayer" },
   { label: "Ministries", href: "/ministries" },
-  { label: "Fast", href: "/fast" },
 ];
 
 export function Header() {
