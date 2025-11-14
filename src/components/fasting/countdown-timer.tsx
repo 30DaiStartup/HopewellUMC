@@ -67,9 +67,9 @@ export function CountdownTimer() {
 
   if (status === 'after') {
     return (
-      <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-6 sm:p-8 text-center text-white shadow-xl">
+      <div className="bg-gradient-to-br from-[#0d6a91] to-[#074159] rounded-2xl p-6 sm:p-8 text-center text-white shadow-xl">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Fast Completed! 🙏</h2>
-        <p className="text-indigo-100 text-base sm:text-lg">
+        <p className="text-white/80 text-base sm:text-lg">
           Thank you for your dedication and participation
         </p>
       </div>
@@ -77,8 +77,8 @@ export function CountdownTimer() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-4 sm:p-6 md:p-8 text-center text-white shadow-xl">
-      <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 text-indigo-100 leading-tight">
+    <div className="bg-gradient-to-br from-[#0d6a91] to-[#074159] rounded-2xl p-4 sm:p-6 md:p-8 text-center text-white shadow-xl">
+      <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 text-white/80 leading-tight">
         Countdown to Sunday, November 16 at Noon EST
       </h2>
 
@@ -87,7 +87,7 @@ export function CountdownTimer() {
           <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.days)}
           </div>
-          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-white/80 uppercase tracking-wide">
             Days
           </div>
         </div>
@@ -96,7 +96,7 @@ export function CountdownTimer() {
           <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.hours)}
           </div>
-          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-white/80 uppercase tracking-wide">
             Hours
           </div>
         </div>
@@ -105,7 +105,7 @@ export function CountdownTimer() {
           <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.minutes)}
           </div>
-          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-white/80 uppercase tracking-wide">
             Mins
           </div>
         </div>
@@ -114,13 +114,13 @@ export function CountdownTimer() {
           <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 bg-white/20 rounded-lg py-2 sm:py-3 backdrop-blur-sm">
             {formatNumber(timeRemaining.seconds)}
           </div>
-          <div className="text-xs sm:text-sm md:text-base text-indigo-100 uppercase tracking-wide">
+          <div className="text-xs sm:text-sm md:text-base text-white/80 uppercase tracking-wide">
             Secs
           </div>
         </div>
       </div>
 
-      <p className="mt-4 sm:mt-6 text-indigo-50 text-xs sm:text-sm md:text-base">
+      <p className="mt-4 sm:mt-6 text-white/90 text-xs sm:text-sm md:text-base">
         {FASTING_EVENT.description}
       </p>
     </div>

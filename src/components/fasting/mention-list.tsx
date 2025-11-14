@@ -59,7 +59,7 @@ export const MentionList = forwardRef((props: MentionListProps, ref) => {
             key={item.id}
             onClick={() => selectItem(index)}
             className={`w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors ${
-              index === selectedIndex ? 'bg-indigo-50 text-indigo-600' : ''
+              index === selectedIndex ? 'bg-[#0b5a7f]/10 text-[#0b5a7f]' : ''
             }`}
           >
             <div className="font-medium">{item.name}</div>

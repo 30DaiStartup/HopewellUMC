@@ -78,7 +78,7 @@ export function RichTextEditor({
   }
 
   return (
-    <div className="border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-indigo-500">
+    <div className="border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#0b5a7f]/100">
       {/* Toolbar */}
       <div className="flex items-center gap-1 p-2 border-b border-gray-200 flex-wrap">
         <ToolbarButton
@@ -164,7 +164,7 @@ function ToolbarButton({ onClick, isActive, icon: Icon, title }: ToolbarButtonPr
     <button
       onClick={onClick}
       className={`p-2 rounded hover:bg-gray-100 transition-colors ${
-        isActive ? 'bg-gray-200 text-indigo-600' : 'text-gray-600'
+        isActive ? 'bg-gray-200 text-[#0b5a7f]' : 'text-gray-600'
       }`}
       title={title}
       type="button"

@@ -168,7 +168,7 @@ export function NewPostDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg bg-indigo-600 hover:bg-indigo-700 z-50"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg bg-[#0b5a7f] hover:bg-[#094e6d] z-50"
           title="Create a new post"
         >
           <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -188,7 +188,7 @@ export function NewPostDialog() {
         >
           {/* User Info */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
+            <div className="w-10 h-10 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold">
               {currentUser.displayName.charAt(0).toUpperCase()}
             </div>
             <p className="font-semibold text-gray-900">{currentUser.displayName}</p>
@@ -196,10 +196,10 @@ export function NewPostDialog() {
 
           {/* Drag and Drop Overlay */}
           {isDragging && (
-            <div className="absolute inset-0 bg-indigo-50 bg-opacity-90 border-4 border-dashed border-indigo-400 rounded-lg flex items-center justify-center z-50">
+            <div className="absolute inset-0 bg-[#0b5a7f]/10 bg-opacity-90 border-4 border-dashed border-indigo-400 rounded-lg flex items-center justify-center z-50">
               <div className="text-center">
-                <ImageIcon className="h-12 w-12 text-indigo-600 mx-auto mb-2" />
-                <p className="text-lg font-semibold text-indigo-600">Drop your media here</p>
+                <ImageIcon className="h-12 w-12 text-[#0b5a7f] mx-auto mb-2" />
+                <p className="text-lg font-semibold text-[#0b5a7f]">Drop your media here</p>
               </div>
             </div>
           )}
@@ -215,7 +215,7 @@ export function NewPostDialog() {
           {/* Processing Indicator */}
           {isProcessing && (
             <div className="flex items-center justify-center p-4 bg-gray-50 rounded-lg">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#0b5a7f]"></div>
               <span className="ml-2 text-gray-600">Processing media...</span>
             </div>
           )}
@@ -316,7 +316,7 @@ export function NewPostDialog() {
             <Button
               onClick={handleSubmit}
               disabled={(!content.replace(/<[^>]*>/g, '').trim() && !mediaPreview) || isProcessing}
-              className="bg-indigo-600 hover:bg-indigo-700 w-full sm:w-auto"
+              className="bg-[#0b5a7f] hover:bg-[#094e6d] w-full sm:w-auto"
             >
               Post
             </Button>

@@ -31,7 +31,7 @@ export function ScripturesSection() {
       case 'sacrifice':
         return 'bg-amber-50 border-amber-200 text-amber-900';
       case 'discipline':
-        return 'bg-indigo-50 border-indigo-200 text-indigo-900';
+        return 'bg-[#0b5a7f]/10 border-[#0b5a7f]/30 text-[#074159]';
       case 'faith':
         return 'bg-green-50 border-green-200 text-green-900';
       case 'prayer':
@@ -46,7 +46,7 @@ export function ScripturesSection() {
       {/* Scriptures Section */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
-          <BookOpen className="h-5 w-5 text-indigo-600" />
+          <BookOpen className="h-5 w-5 text-[#0b5a7f]" />
           <h3 className="text-xl font-semibold text-gray-900">
             Scripture for Fasting
           </h3>
@@ -120,7 +120,7 @@ export function ScripturesSection() {
             >
               <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-semibold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-[#0b5a7f]/20 text-[#0b5a7f] flex items-center justify-center font-semibold text-sm">
                     {index + 1}
                   </div>
                   <h4 className="font-semibold text-gray-900">{tip.title}</h4>
@@ -138,7 +138,7 @@ export function ScripturesSection() {
               <div className="px-4 pb-4 pt-2 bg-gray-50">
                 <p className="text-gray-700">{tip.content}</p>
                 {tip.day && (
-                  <p className="text-sm text-indigo-600 mt-2">
+                  <p className="text-sm text-[#0b5a7f] mt-2">
                     Recommended for Day {tip.day}
                   </p>
                 )}

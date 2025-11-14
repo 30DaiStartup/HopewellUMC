@@ -194,7 +194,7 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
               </div>
             )}
 
-            <Button type="submit" className="w-full gap-2 bg-indigo-600 hover:bg-indigo-700">
+            <Button type="submit" className="w-full gap-2 bg-[#0b5a7f] hover:bg-[#094e6d]">
               {mode === 'login' ? (
                 <>
                   <LogIn className="h-4 w-4" />
@@ -222,7 +222,7 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
               </span>
               <button
                 onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
-                className="text-indigo-600 hover:text-indigo-700 font-medium"
+                className="text-[#0b5a7f] hover:text-[#094e6d] font-medium"
                 type="button"
               >
                 {mode === 'login' ? 'Sign up' : mode === 'signup' ? 'Sign in' : 'Sign in with password'}
@@ -233,7 +233,7 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
                 <span className="text-gray-600">Prefer passwordless? </span>
                 <button
                   onClick={() => switchMode('passwordless')}
-                  className="text-indigo-600 hover:text-indigo-700 font-medium"
+                  className="text-[#0b5a7f] hover:text-[#094e6d] font-medium"
                   type="button"
                 >
                   Use magic link

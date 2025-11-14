@@ -66,7 +66,7 @@ export function PostCard({ post }: PostCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold overflow-hidden">
+          <div className="w-10 h-10 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold overflow-hidden">
             {post.userAvatar ? (
               <Image
                 src={post.userAvatar}
@@ -90,9 +90,9 @@ export function PostCard({ post }: PostCardProps) {
         <div className="flex items-center gap-2">
           {/* Fasting Duration Bubble */}
           {post.fastingDurationMs && (
-            <div className="bg-indigo-50 border border-indigo-200 rounded-full px-3 py-1.5 flex items-center gap-1.5">
+            <div className="bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-full px-3 py-1.5 flex items-center gap-1.5">
               <span className="text-lg">🙏</span>
-              <span className="text-sm font-semibold text-indigo-700">
+              <span className="text-sm font-semibold text-[#094e6d]">
                 {formatFastingDuration(post.fastingDurationMs)}
               </span>
             </div>
@@ -200,7 +200,7 @@ export function PostCard({ post }: PostCardProps) {
 
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors"
+          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#0b5a7f] transition-colors"
         >
           <MessageCircle className="h-5 w-5" />
           <span>{post.comments.length}</span>

@@ -44,7 +44,7 @@ function FastingAppContent() {
                   {!currentUser.isFasting && (
                     <Button
                       onClick={joinFast}
-                      className="bg-indigo-600 hover:bg-indigo-700"
+                      className="bg-[#0b5a7f] hover:bg-[#094e6d]"
                       size="sm"
                     >
                       Join Fast
@@ -52,7 +52,7 @@ function FastingAppContent() {
                   )}
 
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-sm overflow-hidden">
+                    <div className="w-8 h-8 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold text-sm overflow-hidden">
                       {currentUser.avatar ? (
                         <Image
                           src={currentUser.avatar}
@@ -82,7 +82,7 @@ function FastingAppContent() {
               ) : (
                 <Button
                   onClick={() => setAuthModalOpen(true)}
-                  className="bg-indigo-600 hover:bg-indigo-700"
+                  className="bg-[#0b5a7f] hover:bg-[#094e6d]"
                 >
                   Sign In
                 </Button>
@@ -108,7 +108,7 @@ function FastingAppContent() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50'
+                    ? 'text-[#0b5a7f] border-b-2 border-[#0b5a7f] bg-[#0b5a7f]/10'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
@@ -155,14 +155,14 @@ function FastingAppContent() {
 
               {/* Info Card */}
               {!currentUser && (
-                <div className="mt-6 bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-                  <h4 className="font-semibold text-indigo-900 mb-2">Join the Community</h4>
-                  <p className="text-sm text-indigo-700 mb-4">
+                <div className="mt-6 bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-lg p-6">
+                  <h4 className="font-semibold text-[#074159] mb-2">Join the Community</h4>
+                  <p className="text-sm text-[#094e6d] mb-4">
                     Sign in to participate in the fast, track your journey, and connect with others.
                   </p>
                   <Button
                     onClick={() => setAuthModalOpen(true)}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700"
+                    className="w-full bg-[#0b5a7f] hover:bg-[#094e6d]"
                   >
                     Sign In
                   </Button>
