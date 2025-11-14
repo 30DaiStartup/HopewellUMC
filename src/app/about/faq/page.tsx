@@ -36,7 +36,7 @@ export default function FAQPage() {
       faqs: [
         {
           question: "What time are services?",
-          answer: "Sunday School is at 9:15 AM and our main Worship Service is at 10:30 AM every Sunday."
+          answer: "Our Worship Service is at 10:30 AM every Sunday."
         },
         {
           question: "What should I wear?",
@@ -48,7 +48,7 @@ export default function FAQPage() {
         },
         {
           question: "What about my kids during worship?",
-          answer: "We love having children in worship! We offer Sunday School at 9:15 AM for all ages, and children are welcome in the 10:30 AM service. We have programs specifically designed for children and youth."
+          answer: "We love having children in worship! Children are welcome in our 10:30 AM service. We have programs specifically designed for children and youth."
         },
         {
           question: "Why not have multiple Sunday services?",
@@ -106,7 +106,7 @@ export default function FAQPage() {
       faqs: [
         {
           question: "What programs do you offer for children?",
-          answer: "We offer Sunday School at 9:15 AM for all ages, children's ministries throughout the week, and special events. Contact our Director of Christian Education, Sarah Erskine, at (651) 357-3668 for more details."
+          answer: "We offer children's ministries throughout the week and special events. Contact our Director of Christian Education, Sarah Erskine, at (651) 357-3668 for more details."
         },
         {
           question: "What about youth programs?",

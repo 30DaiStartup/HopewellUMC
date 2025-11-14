@@ -66,16 +66,7 @@ export default function AdultMinistryPage() {
                   </div>
                   <h3 className="text-2xl font-bold">Sunday School Classes</h3>
                 </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <Clock className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">When</p>
-                      <p className="text-gray-700">Every Sunday, 9:15 AM</p>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-6">
                   Join one of our adult Sunday School classes for in-depth Bible study, meaningful
                   discussions, and Christian fellowship. Our classes offer a welcoming environment
                   for all adults, from new believers to long-time Christians.

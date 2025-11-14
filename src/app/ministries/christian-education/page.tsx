@@ -70,13 +70,6 @@ export default function ChristianEducationPage() {
                 </div>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-start gap-2">
-                    <Clock className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">When</p>
-                      <p className="text-gray-700">Every Sunday, 9:15 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
                     <Users className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
                     <div>
                       <p className="font-semibold">Ages</p>
@@ -119,13 +112,6 @@ export default function ChristianEducationPage() {
                 </div>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-start gap-2">
-                    <Clock className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">When</p>
-                      <p className="text-gray-700">Every Sunday, 9:15 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
                     <Users className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
                     <div>
                       <p className="font-semibold">Ages</p>
@@ -166,16 +152,7 @@ export default function ChristianEducationPage() {
                   </div>
                   <h3 className="text-2xl font-bold">Adult Classes</h3>
                 </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <Clock className="h-5 w-5 text-[#0b5a7f] mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">When</p>
-                      <p className="text-gray-700">Every Sunday, 9:15 AM</p>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-6">
                   Our adult Sunday School classes offer in-depth Bible study, meaningful discussions,
                   and opportunities for spiritual growth. Multiple classes are available to meet
                   different learning preferences and life stages.
@@ -446,16 +423,11 @@ export default function ChristianEducationPage() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                  <h4 className="text-xl font-bold mb-2">Sunday School</h4>
-                  <p className="text-white/90 text-lg mb-1">9:15 AM</p>
-                  <p className="text-white/80">All Ages - Nursery through Adult</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur rounded-lg p-6">
-                  <h4 className="text-xl font-bold mb-2">Worship Service</h4>
-                  <p className="text-white/90 text-lg mb-1">10:30 AM</p>
-                  <p className="text-white/80">Nursery Care Available</p>
+              <div className="max-w-md mx-auto">
+                <div className="bg-white/10 backdrop-blur rounded-lg p-8 text-center">
+                  <h4 className="text-2xl font-bold mb-3">Worship Service</h4>
+                  <p className="text-white/90 text-4xl font-bold mb-2">10:30 AM</p>
+                  <p className="text-white/80 text-lg">Nursery Care Available</p>
                 </div>
               </div>
             </div>
