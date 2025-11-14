@@ -40,6 +40,31 @@ const categoryLabels: Record<string, string> = {
   other: "Other",
 };
 
+// Static prayer requests that match the prayer page
+const staticPrayerRequests: PrayerRequest[] = [
+  {
+    id: "static-1",
+    name: "Pete Lattig",
+    prayerRequest: "Hip replacement scheduled for November 17th",
+    category: "health",
+    createdAt: new Date("2025-11-12"),
+  },
+  {
+    id: "static-2",
+    name: "Amy Duryea",
+    prayerRequest: "Discharged from infectious disease treatment for staph infection",
+    category: "praise",
+    createdAt: new Date("2025-11-10"),
+  },
+  {
+    id: "static-3",
+    name: "Sommer Tinsley Porter",
+    prayerRequest: "Kidney transplant on November 4th",
+    category: "health",
+    createdAt: new Date("2025-11-03"),
+  },
+];
+
 export function PrayerCarousel() {
   const [prayerRequests, setPrayerRequests] = useState<PrayerRequest[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -48,8 +73,12 @@ export function PrayerCarousel() {
 
   useEffect(() => {
     const fetchPrayerRequests = async () => {
+      // Start with static prayer requests
+      let allRequests: PrayerRequest[] = [...staticPrayerRequests];
+
       if (!db) {
-        setError("Prayer requests are currently unavailable");
+        // If Firebase is not available, just use static requests
+        setPrayerRequests(allRequests);
         setIsLoading(false);
         return;
       }
@@ -69,11 +98,11 @@ export function PrayerCarousel() {
         );
 
         const querySnapshot = await getDocs(q);
-        const requests: PrayerRequest[] = [];
+        const dynamicRequests: PrayerRequest[] = [];
 
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          requests.push({
+          dynamicRequests.push({
             id: doc.id,
             name: data.name || "Anonymous",
             prayerRequest: data.prayerRequest,
@@ -82,11 +111,17 @@ export function PrayerCarousel() {
           });
         });
 
-        setPrayerRequests(requests);
+        // Merge static and dynamic requests, sort by date (newest first)
+        allRequests = [...staticPrayerRequests, ...dynamicRequests].sort(
+          (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+        );
+
+        setPrayerRequests(allRequests);
         setIsLoading(false);
       } catch (err) {
         console.error("Error fetching prayer requests:", err);
-        setError("Unable to load prayer requests");
+        // On error, still show static requests
+        setPrayerRequests(allRequests);
         setIsLoading(false);
       }
     };
