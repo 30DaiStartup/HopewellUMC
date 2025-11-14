@@ -22,7 +22,7 @@ export function ContentBlock({
   ctaText,
   ctaHref,
   reverse = false,
-  backgroundColor = "bg-[#0b717f]",
+  backgroundColor = "bg-[#0b5a7f]",
   textColor = "text-white",
 }: ContentBlockProps) {
   return (
@@ -53,7 +53,7 @@ export function ContentBlock({
             <p className="text-base md:text-lg opacity-90 max-w-xl">{description}</p>
             <Button
               size="lg"
-              className="rounded-full border-2 border-white bg-transparent hover:bg-white hover:text-[#0b717f] text-white px-8 py-6 text-base"
+              className="rounded-full border-2 border-white bg-transparent hover:bg-white hover:text-[#0b5a7f] text-white px-8 py-6 text-base"
             >
               {ctaText}
             </Button>

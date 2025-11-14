@@ -25,7 +25,7 @@ export function VideoSection() {
                 <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                   <button
                     onClick={() => setIsPlaying(true)}
-                    className="group bg-[#0b717f] hover:bg-[#09646a] text-white rounded-full p-6 transition-all transform hover:scale-110 shadow-xl"
+                    className="group bg-[#0b5a7f] hover:bg-[#09646a] text-white rounded-full p-6 transition-all transform hover:scale-110 shadow-xl"
                   >
                     <Play className="h-12 w-12 fill-current" />
                   </button>
@@ -47,7 +47,7 @@ export function VideoSection() {
           <Button
             size="lg"
             variant="outline"
-            className="rounded-full border-2 border-[#0b717f] text-[#0b717f] hover:bg-[#0b717f] hover:text-white px-8 py-6 text-base"
+            className="rounded-full border-2 border-[#0b5a7f] text-[#0b5a7f] hover:bg-[#0b5a7f] hover:text-white px-8 py-6 text-base"
           >
             ALL SERMONS
           </Button>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 export default function ClientBody({
   children,
@@ -13,5 +15,11 @@ export default function ClientBody({
     document.body.className = "antialiased";
   }, []);
 
-  return <div className="antialiased">{children}</div>;
+  return (
+    <div className="antialiased">
+      <Header />
+      {children}
+      <Footer />
+    </div>
+  );
 }

@@ -46,7 +46,7 @@ export function NewsletterSection() {
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="rounded-full bg-[#0b717f] hover:bg-[#09646a] text-white px-8 py-6 text-base whitespace-nowrap"
+                className="rounded-full bg-[#0b5a7f] hover:bg-[#09646a] text-white px-8 py-6 text-base whitespace-nowrap"
               >
                 {isSubmitting ? "SUBSCRIBING..." : "SUBSCRIBE"}
               </Button>
