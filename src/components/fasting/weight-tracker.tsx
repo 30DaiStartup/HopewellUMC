@@ -118,12 +118,12 @@ export function WeightTracker() {
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Scale className="h-6 w-6 text-indigo-600" />
+            <Scale className="h-6 w-6 text-[#0b5a7f]" />
             <h3 className="text-xl font-semibold text-gray-900">Weight Tracking</h3>
           </div>
           <Button
             onClick={() => setShowEntryForm(!showEntryForm)}
-            className="bg-indigo-600 hover:bg-indigo-700 gap-2"
+            className="bg-[#0b5a7f] hover:bg-[#094e6d] gap-2"
             size="sm"
           >
             <Plus className="h-4 w-4" />
@@ -133,7 +133,7 @@ export function WeightTracker() {
 
         {/* Add Weight Entry Form */}
         {showEntryForm && (
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-6">
+          <div className="bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-lg p-4 mb-6">
             <h4 className="font-semibold text-gray-900 mb-3">Record Your Weight</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
               <div>
@@ -144,7 +144,7 @@ export function WeightTracker() {
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   placeholder="Enter weight"
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0b5a7f]/100"
                 />
               </div>
               <div>
@@ -152,7 +152,7 @@ export function WeightTracker() {
                 <select
                   value={unit}
                   onChange={(e) => setUnit(e.target.value as 'lbs' | 'kg')}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0b5a7f]/100"
                 >
                   <option value="lbs">Pounds (lbs)</option>
                   <option value="kg">Kilograms (kg)</option>
@@ -166,7 +166,7 @@ export function WeightTracker() {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Any notes about this weigh-in..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0b5a7f]/100"
               />
             </div>
             <div className="flex gap-2">
@@ -184,12 +184,12 @@ export function WeightTracker() {
         {weightEntries.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Current Weight */}
-            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-[#0b5a7f]/10 to-[#0b5a7f]/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Scale className="h-4 w-4 text-indigo-600" />
-                <span className="text-xs text-indigo-600 font-medium">Current</span>
+                <Scale className="h-4 w-4 text-[#0b5a7f]" />
+                <span className="text-xs text-[#0b5a7f] font-medium">Current</span>
               </div>
-              <div className="text-2xl font-bold text-indigo-900">
+              <div className="text-2xl font-bold text-[#074159]">
                 {statistics.currentWeight.toFixed(1)} {weightEntries[0].unit}
               </div>
             </div>
@@ -260,7 +260,7 @@ export function WeightTracker() {
       {chartData.length > 1 && (
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
           <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <TrendingDown className="h-5 w-5 text-indigo-600" />
+            <TrendingDown className="h-5 w-5 text-[#0b5a7f]" />
             Weight Trend
           </h4>
           <div className="h-[300px] w-full">
@@ -411,7 +411,7 @@ export function WeightTracker() {
       {weightEntries.length > 0 && (
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
           <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-indigo-600" />
+            <Calendar className="h-5 w-5 text-[#0b5a7f]" />
             Weight History
           </h4>
           <div className="space-y-3 max-h-[400px] overflow-y-auto">
@@ -421,7 +421,7 @@ export function WeightTracker() {
                 className="flex items-center justify-between bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">
+                  <div className="bg-[#0b5a7f]/20 text-[#0b5a7f] rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">
                     {index + 1}
                   </div>
                   <div>
@@ -448,7 +448,7 @@ export function WeightTracker() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <div className="text-lg font-semibold text-indigo-600">
+                    <div className="text-lg font-semibold text-[#0b5a7f]">
                       {entry.weight} {entry.unit}
                     </div>
                   </div>
@@ -482,7 +482,7 @@ export function WeightTracker() {
           </p>
           <Button
             onClick={() => setShowEntryForm(true)}
-            className="bg-indigo-600 hover:bg-indigo-700"
+            className="bg-[#0b5a7f] hover:bg-[#094e6d]"
           >
             Add Your First Weight Entry
           </Button>

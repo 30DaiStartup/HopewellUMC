@@ -88,8 +88,8 @@ const FASTING_ZONES: FastingZone[] = [
     name: 'Deep Ketosis',
     startHours: 24,
     endHours: 48,
-    color: 'text-indigo-600',
-    bgColor: 'bg-indigo-50',
+    color: 'text-[#0b5a7f]',
+    bgColor: 'bg-[#0b5a7f]/10',
     borderColor: 'border-indigo-300',
     icon: Sparkles,
     description: 'Heightened metabolic state',
@@ -198,15 +198,15 @@ export function FastingZonesTimeline({ elapsedTimeMs, isActive }: FastingZonesTi
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-4 sm:p-6 text-white">
+      <div className="bg-gradient-to-r from-[#0b5a7f]/100 to-purple-600 p-4 sm:p-6 text-white">
         <div className="flex items-center justify-between gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="text-lg sm:text-xl font-bold mb-1">Metabolic Journey</h3>
-            <p className="text-indigo-100 text-xs sm:text-sm">Track your body&apos;s transformation</p>
+            <p className="text-[#0b5a7f]/20 text-xs sm:text-sm">Track your body&apos;s transformation</p>
           </div>
           <div className="text-right flex-shrink-0">
             <div className="text-2xl sm:text-3xl font-bold">{Math.floor(hoursElapsed)}h</div>
-            <div className="text-indigo-100 text-xs sm:text-sm whitespace-nowrap">
+            <div className="text-[#0b5a7f]/20 text-xs sm:text-sm whitespace-nowrap">
               {Math.floor((hoursElapsed % 1) * 60)}m elapsed
             </div>
           </div>

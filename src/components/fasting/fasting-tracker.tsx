@@ -159,27 +159,27 @@ export function FastingTracker() {
         </h3>
 
         {/* Timer Display */}
-        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4 sm:p-8 mb-6">
+        <div className="bg-gradient-to-br from-[#0b5a7f]/10 to-[#0b5a7f]/20 rounded-lg p-4 sm:p-8 mb-6">
           <div className="flex justify-center gap-2 sm:gap-4 mb-6">
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.hours}</div>
-              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Hours</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.hours}</div>
+              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Hours</div>
             </div>
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">:</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">:</div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.minutes}</div>
-              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Minutes</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.minutes}</div>
+              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Minutes</div>
             </div>
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">:</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">:</div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-indigo-600">{duration.seconds}</div>
-              <div className="text-xs sm:text-sm text-indigo-600 mt-1">Seconds</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0b5a7f]">{duration.seconds}</div>
+              <div className="text-xs sm:text-sm text-[#0b5a7f] mt-1">Seconds</div>
             </div>
           </div>
 
-          <div className="h-2 bg-indigo-200 rounded-full overflow-hidden">
+          <div className="h-2 bg-[#0b5a7f]/30 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-600 transition-all duration-1000"
+              className="h-full bg-[#0b5a7f] transition-all duration-1000"
               style={{ width: currentSession ? '100%' : '0%' }}
             />
           </div>
@@ -194,7 +194,7 @@ export function FastingTracker() {
                   type="checkbox"
                   checked={shareWithCommunity}
                   onChange={(e) => setShareWithCommunity(e.target.checked)}
-                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="rounded border-gray-300 text-[#0b5a7f] focus:ring-[#0b5a7f]"
                 />
                 <span>Share my progress with the community</span>
               </label>
@@ -230,7 +230,7 @@ export function FastingTracker() {
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-indigo-600" />
+            <TrendingUp className="h-5 w-5 text-[#0b5a7f]" />
             Your Progress
           </h3>
         </div>
@@ -369,7 +369,7 @@ export function FastingTracker() {
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-indigo-600" />
+              <Calendar className="h-5 w-5 text-[#0b5a7f]" />
               Fasting History
             </h3>
             <Button
@@ -389,7 +389,7 @@ export function FastingTracker() {
                   className="flex items-center justify-between bg-gray-50 p-3 sm:p-4 rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                    <div className="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center text-sm font-semibold">
+                    <div className="bg-[#0b5a7f]/20 text-[#0b5a7f] rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center text-sm font-semibold">
                       {index + 1}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -417,7 +417,7 @@ export function FastingTracker() {
                   </div>
                   <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                     <div className="text-right">
-                      <div className="text-base sm:text-lg font-semibold text-indigo-600">
+                      <div className="text-base sm:text-lg font-semibold text-[#0b5a7f]">
                         {formatDurationText(session.duration)}
                       </div>
                     </div>
@@ -449,8 +449,8 @@ export function FastingTracker() {
       {/* Daily Content */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <h4 className="font-semibold text-gray-900 mb-4">Daily Scripture</h4>
-        <div className="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded">
-          <p className="text-sm font-semibold text-indigo-900 mb-2">{dailyScripture.reference}</p>
+        <div className="bg-[#0b5a7f]/10 border-l-4 border-[#0b5a7f] p-4 rounded">
+          <p className="text-sm font-semibold text-[#074159] mb-2">{dailyScripture.reference}</p>
           <p className="text-gray-700 italic">{dailyScripture.text}</p>
         </div>
 
@@ -481,7 +481,7 @@ export function FastingTracker() {
                 onClick={() => setSelectedMood(mood.value)}
                 className={`flex flex-col items-center p-3 sm:p-4 rounded-lg border-2 transition-all min-h-[80px] sm:min-h-0 ${
                   selectedMood === mood.value
-                    ? 'border-indigo-600 bg-indigo-50'
+                    ? 'border-[#0b5a7f] bg-[#0b5a7f]/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -497,7 +497,7 @@ export function FastingTracker() {
           value={journalContent}
           onChange={(e) => setJournalContent(e.target.value)}
           placeholder="What stirs in your spirit? Reflect on your journey..."
-          className="w-full min-h-[120px] p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-3"
+          className="w-full min-h-[120px] p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#0b5a7f] mb-3"
         />
 
         {/* Share Option */}
@@ -506,7 +506,7 @@ export function FastingTracker() {
             type="checkbox"
             checked={shareToFeed}
             onChange={(e) => setShareToFeed(e.target.checked)}
-            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            className="rounded border-gray-300 text-[#0b5a7f] focus:ring-[#0b5a7f]"
           />
           <span className="text-sm text-gray-700">Share this entry with the community</span>
         </label>

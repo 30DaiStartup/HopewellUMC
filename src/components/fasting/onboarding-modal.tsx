@@ -42,7 +42,7 @@ export function OnboardingModal() {
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-[#0b5a7f]/100 to-[#0b5a7f] rounded-full flex items-center justify-center">
               <Sparkles className="h-8 w-8 text-white" />
             </div>
           </div>
@@ -56,9 +56,9 @@ export function OnboardingModal() {
             {FASTING_EVENT.description}
           </p>
 
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <h4 className="font-semibold text-indigo-900 mb-2">When?</h4>
-            <p className="text-sm text-indigo-700">
+          <div className="bg-[#0b5a7f]/10 border border-[#0b5a7f]/30 rounded-lg p-4">
+            <h4 className="font-semibold text-[#074159] mb-2">When?</h4>
+            <p className="text-sm text-[#094e6d]">
               <strong>Starts:</strong> {FASTING_EVENT.startDate.toLocaleDateString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
@@ -66,7 +66,7 @@ export function OnboardingModal() {
                 day: 'numeric',
               })}
             </p>
-            <p className="text-sm text-indigo-700 mt-1">
+            <p className="text-sm text-[#094e6d] mt-1">
               <strong>Ends:</strong> {FASTING_EVENT.endDate.toLocaleDateString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
@@ -90,7 +90,7 @@ export function OnboardingModal() {
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <Button
               onClick={handleJoinFast}
-              className="flex-1 bg-indigo-600 hover:bg-indigo-700 gap-2"
+              className="flex-1 bg-[#0b5a7f] hover:bg-[#094e6d] gap-2"
               size="lg"
             >
               <Sparkles className="h-4 w-4" />

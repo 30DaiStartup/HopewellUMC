@@ -21,7 +21,7 @@ export function ParticipantList() {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
-        <UserIcon className="h-5 w-5 text-indigo-600" />
+        <UserIcon className="h-5 w-5 text-[#0b5a7f]" />
         <h3 className="text-lg font-semibold text-gray-900">
           Participants ({participants.length})
         </h3>
@@ -34,7 +34,7 @@ export function ParticipantList() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
           >
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold shrink-0 overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-[#0b5a7f]/20 flex items-center justify-center text-[#0b5a7f] font-semibold shrink-0 overflow-hidden">
               {participant.avatar ? (
                 <Image
                   src={participant.avatar}
@@ -53,7 +53,7 @@ export function ParticipantList() {
               <p className="font-semibold text-gray-900 truncate">
                 {participant.displayName}
                 {participant.isAdmin && (
-                  <span className="ml-2 text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">
+                  <span className="ml-2 text-xs bg-[#0b5a7f]/20 text-[#094e6d] px-2 py-0.5 rounded-full">
                     Admin
                   </span>
                 )}
