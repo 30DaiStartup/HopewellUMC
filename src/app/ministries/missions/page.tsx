@@ -114,7 +114,7 @@ export default function MissionsPage() {
                 <div className="text-sm text-gray-600">
                   <p className="font-semibold mb-1">Contact:</p>
                   <p>Steve Jackson</p>
-                  <p>(864) 838-7084</p>
+                  <p>(864) 733-3124</p>
                 </div>
               </div>
 
